@@ -2,6 +2,11 @@
 <html lang="en">
 
 <!--Headers-->
+<!-- Required meta tags -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<!-- Material Design for Bootstrap fonts and icons -->
+
 {% include 'base/header.html' %}
 
 <!-- BODY options, add following classes to body to change options
@@ -48,11 +53,8 @@
 
         <!-- Page contents -->
         <div class="container-fluid">
-            <div class="animated fadeIn">
-                {% block content %}
-                {% endblock %}
-            </div>
-
+            {% block content %}
+            {% endblock %}
         </div>
         <!-- /.conainer-fluid -->
     </main>
@@ -65,9 +67,9 @@
 
 <!--Footer-->
 {% include 'base/footer.html' %}
-
+<!--CSS-->
+{% include 'base/css.html' %}
 <!--JS-->
 {% include 'base/js.html' %}
-
 </body>
 </html>
