@@ -51,8 +51,11 @@
         <!-- Breadcrumb -->
         {% include 'base/breadcrumb.html' %}
 
+
         <!-- Page contents -->
         <div class="container-fluid">
+            <!--flag messages-->
+            {% include 'base/messages.html' %}
             {% block content %}
             {% endblock %}
         </div>
@@ -63,6 +66,7 @@
     <!--Aside bar-->
     {% include 'base/asidebar.html' %}
 
+
 </div>
 
 <!--Footer-->
@@ -71,5 +75,6 @@
 {% include 'base/css.html' %}
 <!--JS-->
 {% include 'base/js.html' %}
+
 </body>
 </html>

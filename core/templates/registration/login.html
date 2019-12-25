@@ -1,0 +1,29 @@
+{% load static %}
+
+{% block css %}
+    {% include 'base/messages.html' %}
+    {% include 'base/css.html' %}
+
+    <link rel="stylesheet" href="{% static 'dist/css/style.min.css' %}">
+    <link rel="stylesheet" href="{% static 'dist/css/signin.css' %}">
+{% endblock %}
+
+
+{% block body %}
+    <form action="{% url 'login' %}" method="post" class="form-signin">
+        {% csrf_token %}
+
+        {% if form.errors %}
+                <p class="alert alert-warning" style = " padding:-60px;width:500px; margin-left: -100px;">Seu <strong>usuário e senha</strong> não correspondem. Por favor tente novamente.</p>
+        {% endif %}
+
+        <label for="username" class="sr-only">Usuário</label>
+        <input type="text" name="username" id="username" class="form-control" placeholder="Usuário" required autofocus>
+        <label for="password" class="sr-only">Senha</label>
+        <input type="password" name="password" id="password" class="form-control" placeholder="Senha" required>
+
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Acessar</button>
+    </form>
+    <!--JS-->
+    {% include 'base/js.html' %}
+{% endblock %}
