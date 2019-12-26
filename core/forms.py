@@ -10,9 +10,10 @@ class LoginForm(forms.Form):
 
 
 class RegisterForm(forms.Form):
+
     username = forms.CharField(
-        error_messages={'required': 'Obrigatório o preenchimento do nome'},
-        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Seu nome completo'}),
+        error_messages={'required': 'Obrigatório o preenchimento do Usuario de login'},
+        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Usuario de login'}),
     )
 
     email = forms.EmailField(

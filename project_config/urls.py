@@ -18,7 +18,7 @@ from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.auth import views as auth_views
-from core.views import register_page, logout_page
+from core.views import register_page, logout_page, CreatecollaboratorView
 from . import views
 from django.urls import path
 
@@ -28,4 +28,5 @@ urlpatterns = [
     path('accounts/login/', auth_views.LoginView.as_view(), name='login'),
     path('logout/', auth_views.LoginView.as_view(), name='logout'),
     path('register/', register_page, name='register'),
+    path('collaborator-register/', CreatecollaboratorView.as_view(), name='register_collaborator'),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
