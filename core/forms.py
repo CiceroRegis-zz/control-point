@@ -13,13 +13,13 @@ class RegisterForm(forms.Form):
 
     username = forms.CharField(
         error_messages={'required': 'Obrigatório o preenchimento do Usuario de login'},
-        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Usuario de login'}),
+        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Login'}),
     )
 
     email = forms.EmailField(
         error_messages={'required': 'Obrigatório o preenchimento do E-mail'},
         widget=forms.TextInput(
-            attrs={'class': 'form-control validate', 'placeholder': 'Digite seu E-mail', 'type': 'email'}),
+            attrs={'class': 'form-control validate', 'placeholder': 'E-mail', 'type': 'email'}),
     )
 
     password = forms.CharField(
@@ -46,7 +46,7 @@ class RegisterForm(forms.Form):
         return email
 
     def clean_confirm_password(self):
-        data = self.cleaned_data
+        data = self.cleaned_data 
         password = self.cleaned_data['password']
         confirm_password = self.cleaned_data['confirm_password']
         if password != confirm_password:
