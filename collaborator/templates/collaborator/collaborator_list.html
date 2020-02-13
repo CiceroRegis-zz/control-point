@@ -1,0 +1,18 @@
+{% extends 'base/base.html' %}
+{% load static %}
+
+{% block content %}
+<br>
+<ul>
+    {% for collaborator in object_list %}
+    <li> {{ collaborator }}</li>
+    {% empty %}
+    <!-- <a href="{% url 'delete_funcionario' funcionario.id %}">
+            Deletar
+        </a> -->
+    <li>Nenhum collaborator cadastrado.</li>
+    {% endfor %}
+</ul>
+<a href="{% url 'register_collaborator' %}" class="btn btn-info"> Novo </a>
+
+{% endblock %}

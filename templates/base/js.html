@@ -4,13 +4,22 @@
 <script src="{% static 'dist/vendors/js/popper.min.js' %}"></script>
 <script src="{% static 'dist/vendors/js/bootstrap.min.js' %}"></script>
 <script src="{% static 'dist/vendors/js/pace.min.js' %}"></script>
+{#<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>#}
+{#<link rel="stylesheet" href="{% static 'dist/css/jquery.datetimepicker.min.css' %}">#}
+
+
+
+
+
 
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 
 
-<script>$(document).ready(function () {
-    $('body').bootstrapMaterialDesign();
-});</script>
+<!-- <script>
+    $(document).ready(function () 
+   $('body').bootstrapMaterialDesign();
+);
+</script> -->
 
 
 <!-- Plugins and scripts required by all views -->
@@ -20,6 +29,7 @@
 <!-- CoreUI main scripts -->
 
 <script src="{% static 'dist/js/app.js' %}"></script>
+<script src="{% static 'dist/js/portal.js' %}"></script>
 
 <!-- Plugins and scripts required by this views -->
 
@@ -27,6 +37,12 @@
 <script src="{% static 'dist/js/views/main.js' %}"></script>
 <script src="{% static 'src/js/validation/mask.js' %}"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.0/jquery.mask.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.min.css"
+    integrity="sha256-b88RdwbRJEzRx95nCuuva+hO5ExvXXnpX+78h8DjyOE=" crossorigin="anonymous" />
+<script src="{% static 'dist/js/datepicker-pt.js' %}"></script>
+<script src="{% static 'dist/js/datepicker.js' %}"></script>
 {% block script %}
 
 {% endblock %}
