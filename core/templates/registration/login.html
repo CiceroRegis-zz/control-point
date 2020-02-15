@@ -10,7 +10,7 @@
 
 
 {% block body %}
-    <form action="{% url 'login' %}" method="post" class="form-signin">
+    <form action="{% url 'collaborator:login' %}" method="post" class="form-signin">
         {% csrf_token %}
 
         {% if form.errors %}
