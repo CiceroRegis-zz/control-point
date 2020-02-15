@@ -88,3 +88,4 @@ class UpdateCollaboratorView(UpdateView):
     model = Collaborator
     fields = ['nome', 'birth']
     template_name = 'register/update_collaborator.html'
+

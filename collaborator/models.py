@@ -16,5 +16,4 @@ class Collaborator(models.Model):
         _date = self.birth
         return _date.strftime('%d/%m/%Y')
 
-    # def email_collaborator(self):
-    #     return self.user.email
+    

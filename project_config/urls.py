@@ -18,18 +18,13 @@ from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.auth import views as auth_views
-from core.views import register_page, CreatecollaboratorView, ListCollaborator, UpdateCollaboratorView
 from . import views
-from django.urls import path
+from django.urls import path, include
+
+app_name='collaborator'
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.home, name='home'),
-    path('list-collaborator/', ListCollaborator.as_view(), name='collaborator_list'),
-    path('register/', register_page, name='register'),
-    path('register-collaborator/', CreatecollaboratorView.as_view(), name='register_collaborator'),
-    path('update-collaborator/<int:pk>/', UpdateCollaboratorView.as_view(), name='update_collaborator'),
-    path('accounts/login/', auth_views.LoginView.as_view(), name='login'),
-    path('logout/', auth_views.LoginView.as_view(), name='logout'),
-
+    path('', include('collaborator.urls', namespace='collaborator')),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
