@@ -84,8 +84,8 @@ class ListCollaborator(ListView):
         return context
 
 
-class UpdateCollaboratorView(UpdateView):
-    model = Collaborator
-    fields = ['nome', 'birth']
-    template_name = 'register/update_collaborator.html'
-
+def showProfile(request):
+    context = {
+        'profile': Collaborator.objects.filter(user=request.user)
+    }
+    return render(request, 'collaborator/profile_collaborator.html', context)
