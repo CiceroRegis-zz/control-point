@@ -25,7 +25,7 @@ User = get_user_model()
 
 
 @login_required
-def register_page(request):
+def login_page(request):
     form = RegisterForm(request.POST or None)
     context = {
         "form": form,
@@ -43,46 +43,10 @@ def register_page(request):
 
     return render(request, "auth/register.html", context)
 
-
-@method_decorator(login_required, name="dispatch")
-class CreatecollaboratorView(CreateView):
-    model = Collaborator
-    form_class = CollaboratorForm
-    template_name = "register/register_collaborator.html"
-    success_url = reverse_lazy("register_collaborator")
-
-    def form_valid(self, form):
-        super(CreatecollaboratorView, self).form_valid(form)
-        # Add action to valid form phase
-        collaborator = form.save(commit=False)
-        if collaborator is None:
-            username = collaborator.user.split('')[0] + collaborator.user.split('')[1]
-            collaborator.user = User.objects.create(username=username)
-            collaborator.save()
-            messages.success(self.request, "Seus dados foram salvos com sucesso!")
-        return HttpResponseRedirect(self.get_success_url())
-
-    def get_form_kwargs(self):
-        kwargs = super(CreatecollaboratorView, self).get_form_kwargs()
-        kwargs.update({'username': self.request.user})
-        return kwargs
-
-    # def form_invalid(self, form):
-    #     # Add action to invalid form phase
-    #     super(CreatecollaboratorView, self).form_invalid(form)
-    #     # Add action to valid form phase
-    #     messages.warning(self.request, 'Ocorreu um erro ao tentar salvar dos dados!')
-    #     return self.render_to_response(self.get_context_data(form=form))
-
-
-class ListCollaborator(ListView):
-    model = Collaborator
-    paginate_by = 100
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        return context
-
+def completeDataCollaborator(request):
+    form = CollaboratorForm(request.POST or None)
+    context = {"form": CollaboratorForm()}
+    return render(request, 'register/register_collaborator.html', context)
 
 def showProfile(request):
     context = {
