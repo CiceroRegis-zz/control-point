@@ -46,13 +46,14 @@ def login_page(request):
 
 
 def completeDataCollaborator(request):
+    form = CollaboratorForm(request.POST or None)
     if request.method == "POST":
-        form = CollaboratorForm(request.POST or None)
         if form.is_valid():
-            form.save()
+            user = User.objects.filter(username=request.user)
+            form.save(user)
             messages.success(request, _("Usuario salvo com sucesso"))
         else:
-            messages.warning(request, _("Não foi possivel salvar este usuario. Verifique se os campos estão corretos!"))    
+            messages.warning(request, _("Não foi possivel salvar este usuario. Verifique se os campos estão correto"))    
     return render(request, "register/register_collaborator.html", {'form':form})
 
 

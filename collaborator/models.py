@@ -1,6 +1,6 @@
-from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.models import User
 from django.db import models
+from django.utils.translation import gettext_lazy as _
 
 
 class Collaborator(models.Model):
@@ -10,7 +10,7 @@ class Collaborator(models.Model):
         ('F', _('Feminino')),
     )
     
-    user = models.OneToOneField(User, blank=True, null=True, on_delete=models.PROTECT)
+    user = models.ForeignKey(User, null=True, blank=True, on_delete=models.DO_NOTHING, verbose_name=_('User'))
     nome = models.CharField(max_length=100)
     birth = models.DateField(null=True, blank=True, verbose_name='date of birth')
     sexo = models.CharField(max_length=1, blank=True, null=True, choices=SEXO_CHOICES)
@@ -23,8 +23,6 @@ class Collaborator(models.Model):
     def __str__(self):
         return self.nome
 
-    # def birthday(self):
-    #     _date = self.birth
-    #     return _date.strftime('%d/%m/%Y')
-
-    
+    def birthday(self):
+        _date = self.birth
+        return _date.strftime('%d/%m/%Y')

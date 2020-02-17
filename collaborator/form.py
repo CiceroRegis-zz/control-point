@@ -48,14 +48,26 @@ class CollaboratorForm(forms.ModelForm):
         widget=forms.Select(attrs={'class': 'form-control', 'id':'landline', 'placeholder': 'Telefone Fixo'}),
 
         ) 
+    
+    username = forms.CharField(
+        error_messages={'required': 'Obrigatório o preenchimento do Usuario de login'},
+        widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Login'}),
+    )
+    
+    def clean_username(self):
+        username = self.cleaned_data['username']
+        queryset = User.objects.filter(username=username)
+        if queryset.exists():
+            raise forms.ValidationError('Esse usuario já existe, escolha outro nome')
+        return username
 
     class Meta:
         model = Collaborator
-        exclude = ('updateAt', 'createAt',)
+        exclude = ('user','updateAt', 'createAt',)
 
     # def __init__(self, username, *args, **kwargs):
     #     super(CollaboratorForm, self).__init__(*args, **kwargs)
-    #     self.fields['user'].queryset = User.objects.filter(
-    #        username=username)
+    #     # self.fields['user'].queryset = User.objects.filter(
+    #     #    username=username)
             
     #     self.fields['user'].widget.attrs.update({'placeholder': 'Username', 'class': 'form-control'})
