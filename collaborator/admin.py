@@ -6,7 +6,7 @@ from .models import Collaborator
 
 @admin.register(Collaborator)
 class CollaboratorAdmin(admin.ModelAdmin):
-    list_display = ('nome', 'user', 'birthday')
+    list_display = ('nome', 'user', 'birth')
 
     def save_model(self, request, obj, form, change):
         obj.user = request.user

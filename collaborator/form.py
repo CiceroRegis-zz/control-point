@@ -22,6 +22,13 @@ class CollaboratorForm(forms.ModelForm):
         error_messages={'required': 'Informe o cpf'},
         widget=forms.TextInput(attrs={'class': 'form-control', 'id':'CPF', 'placeholder': 'CPF'}),
     )
+    
+    def clean_cpf(self):
+        cpf = self.cleaned_data['cpf']
+        queryset = Collaborator.objects.filter(cpf=cpf)
+        if queryset.exists():
+            raise forms.ValidationError('Já exite um usuário com este cpf')
+        return cpf
      
     phone_number = forms.CharField(
         error_messages={'required': 'Informe um numero de celular'},

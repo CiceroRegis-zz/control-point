@@ -23,8 +23,8 @@ class Collaborator(models.Model):
     def __str__(self):
         return self.nome
 
-    def birthday(self):
-        _date = self.birth
-        return _date.strftime('%d/%m/%Y')
+    # def birthday(self):
+    #     _date = self.birth
+    #     return _date.strftime('%d/%m/%Y')
 
     
