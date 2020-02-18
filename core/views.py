@@ -46,12 +46,12 @@ def login_page(request):
     return render(request, "auth/register.html", context)
 
 @login_required
-def registerDataCollaborator(request):
+def registerDataCollaborator(request, *args, **kwargs):
     form = CollaboratorForm(request.POST or None)
     if request.method == "POST":
         if form.is_valid():
-            collaborator = form.save(commit=True)
-            collaborator.save()
+            form = Collaborator(user=request.user, **form)
+            form.save()
             form = CollaboratorForm()
             messages.success(request, _("Usuario salvo com sucesso"))
         else:

@@ -12,8 +12,8 @@ admin.site.register(User, UserAdmin)
 @admin.register(Collaborator)
 class CollaboratorAdmin(admin.ModelAdmin):
     form = CollaboratorForm
-    list_display = ('nome', 'user', 'sexo','phone_number', 'isWhatsapp', 'landline', 'birthday', 'createAt')
-    readonly_fields = [
-        'cpf','birth'
-    ]
+    list_display = ('nome', 'user', 'sexo','phone_number', 'isWhatsapp', 'landline', 'birth', 'createAt')
+    readonly_fields = ['cpf','birth']
+    
+    
 
