@@ -21,27 +21,38 @@
 
                 <div class="col-12">
                     <div class="form-group">
-                        <label for="birth" class="sr-only">sexo</label>
+                        <label for="sexo" class="sr-only">sexo</label>
                         {{ form.sexo }}
                     </div>
                 </div>
 
                 <div class="col-12">
                     <div class="form-group">
-                        <label for="birth" class="sr-only">cpf</label>
+                        <label for="cpf" class="sr-only">cpf</label>
                         {{ form.cpf }}
                     </div>
                 </div>
                 <div class="col-12">
                     <div class="form-group">
-                        <label for="birth" class="sr-only">phone_number</label>
+                        <label for="phone_number" class="sr-only">phone_number</label>
                         {{ form.phone_number }}
+                    </div>
+                </div>
+                    <div class="col-12">
+                        <div class="form-group">
+                            {{ form.isWhatsapp }}
+                            <label class="form-check-label" for="isWhatsapp">
+                                <strong>Este numero é Whatsapp.</strong></label>
+                            <small id="emailHelp" class="form-text text-muted">Caso o numero de celular seja de Whatsapp está opção deverá ser marcada.</small>
+                            <!-- <a href="#" data-toggle="tooltip" data-placement="right" title="Caso o motivo de agendamento seja
+                                realizado através da opção videoconferência esta opção deverá ser
+                                marcada."><div class="tooltip-check">?<div></a></div> -->
                     </div>
                 </div>
 
                 <div class="col-12">
                     <div class="form-group">
-                        <label for="birth" class="sr-only">landline</label>
+                        <label for="landline" class="sr-only">landline</label>
                         {{ form.landline }}
                     </div>
                 </div>

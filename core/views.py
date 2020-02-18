@@ -28,9 +28,9 @@ User = get_user_model()
 @login_required
 def login_page(request):
     form = RegisterForm(request.POST or None)
-    # context = {
-    #     "form": form,
-    # }
+    context = {
+        "form": form,
+    }
 
     if form.is_valid():
         print(form.cleaned_data)
@@ -41,22 +41,26 @@ def login_page(request):
         print(new_user)
         messages.success(request, _("Usuario salvo com sucesso"))
         context = {"form": RegisterForm()}
-
+    else:
+        messages.warning(request, _("Não foi possivel salvar este usuario. Verifique se os campos estão correto"))
+        
     return render(request, "auth/register.html", context)
 
-
+@login_required
 def completeDataCollaborator(request):
     form = CollaboratorForm(request.POST or None)
     if request.method == "POST":
         if form.is_valid():
-            user = User.objects.filter(username=request.user)
-            form.save(user)
+            collaborator = form.save(commit=True)
+            collaborator = request.user
+            collaborator.save()
+            form = CollaboratorForm()
             messages.success(request, _("Usuario salvo com sucesso"))
         else:
             messages.warning(request, _("Não foi possivel salvar este usuario. Verifique se os campos estão correto"))    
     return render(request, "register/register_collaborator.html", {'form':form})
 
-
+@login_required
 def showProfile(request):
     context = {"profile": Collaborator.objects.filter(user=request.user)}
     return render(request, "collaborator/profile_collaborator.html", context)

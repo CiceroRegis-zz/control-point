@@ -1,12 +1,15 @@
 from django.contrib import admin
 
+from collaborator.form import CollaboratorForm
+
 # Register your models here.
 from .models import Collaborator
 
 
 @admin.register(Collaborator)
 class CollaboratorAdmin(admin.ModelAdmin):
-    list_display = ('nome', 'user', 'birthday')
+    form = CollaboratorForm
+    list_display = ('nome', 'user', 'sexo', 'birthday')
 
     def save_model(self, request, obj, form, change):
         obj.user = request.user
