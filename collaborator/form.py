@@ -50,12 +50,12 @@ class CollaboratorForm(forms.ModelForm):
             }
         ),
     )
-    isWhatsapp = forms.BooleanField(
-        error_messages={"required": "Este numero é whatsapp?"}, required=False
-    )
+    isWhatsapp = forms.BooleanField(required=False)
 
     landline = forms.CharField(
+        required=False,
         widget=forms.TextInput(
+            
             attrs={
                 "class": "form-control",
                 "id": "landline",
@@ -65,14 +65,15 @@ class CollaboratorForm(forms.ModelForm):
     )
 
     SEXO_CHOICES = (
-        ("M", "Masculino"),
-        ("F", "Feminino"),
+        ('M', _('Masculino')),
+        ('F', _('Feminino')),
     )
 
     sexo = forms.ChoiceField(
-        choices=SEXO_CHOICES,
+        choices=SEXO_CHOICES,required=True, label='Sexo',
+        error_messages={"required": "Campo Sexo é obrigatório"},
         widget=forms.Select(
-            attrs={"class": "form-control", "placeholder": "Telefone Fixo"}
+            attrs={"name": "select_0", "class": "form-control", "placeholder": "Telefone Fixo"}
         ),
     )
 

@@ -11,7 +11,7 @@ from django.utils.translation import gettext_lazy as _
 from django.views.generic import CreateView, ListView, UpdateView
 
 from collaborator.form import CollaboratorForm
-from collaborator.models import Collaborator
+from collaborator.models import Collaborator, User
 
 from .forms import LoginForm, RegisterForm
 
@@ -31,33 +31,31 @@ def login_page(request):
     context = {
         "form": form,
     }
-
-    if form.is_valid():
-        print(form.cleaned_data)
-        username = form.cleaned_data["username"]
-        email = form.cleaned_data["email"]
-        password = form.cleaned_data["password"]
-        new_user = User.objects.create_user(username, email, password)
-        print(new_user)
-        messages.success(request, _("Usuario salvo com sucesso"))
-        context = {"form": RegisterForm()}
-    else:
-        messages.warning(request, _("Não foi possivel salvar este usuario. Verifique se os campos estão correto"))
-        
+    if request.method == "POST":
+        if form.is_valid():
+            print(form.cleaned_data)
+            username = form.cleaned_data["username"]
+            email = form.cleaned_data["email"]
+            password = form.cleaned_data["password"]
+            new_user = User.objects.create_user(username, email, password)
+            print(new_user)
+            messages.success(request, _("Usuario salvo com sucesso"))
+            context = {"form": RegisterForm()}
+        else:
+            messages.warning(request, _("Não foi possivel salvar este usuario. Verifique se os campos estão correto"))
     return render(request, "auth/register.html", context)
 
 @login_required
-def completeDataCollaborator(request):
+def registerDataCollaborator(request):
     form = CollaboratorForm(request.POST or None)
     if request.method == "POST":
         if form.is_valid():
             collaborator = form.save(commit=True)
-            collaborator = request.user
             collaborator.save()
             form = CollaboratorForm()
             messages.success(request, _("Usuario salvo com sucesso"))
         else:
-            messages.warning(request, _("Não foi possivel salvar este usuario. Verifique se os campos estão correto"))    
+            messages.warning(request, _("Não foi possivel salvar os dados. Verifique se os campos estão correto!"))    
     return render(request, "register/register_collaborator.html", {'form':form})
 
 @login_required
