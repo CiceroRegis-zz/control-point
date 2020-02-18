@@ -112,13 +112,16 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# Substituting a custom User model
+# https://docs.djangoproject.com/en/2.2/topics/auth/customizing/#substituting-a-custom-user-model
+AUTH_USER_MODEL = 'collaborator.User'
+
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
 
+
 LANGUAGE_CODE = 'pt-br'
-
 TIME_ZONE = 'America/Sao_Paulo'
-
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True
