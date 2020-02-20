@@ -80,14 +80,13 @@ def updateProfileCollaborator(request, collaborator):
 def disableProfileCollaborator(request, collaborator):
     c = Collaborator.objects.get(pk=collaborator)
     if not c:
-        messages.warning(request, _('This collaborator not found.'))
+        messages.warning(request, _('This Collaborator not found.'))
     try:
-       if user.is_active:
+       if c:
            c.delete()
-           c.save()
-           messages.success(request, _('Reservation canceled.'))
+           messages.success(request, _('Collaborator canceled.'))
     except Exception:
-        messages.warning(request, _('Reservation not canceled.'))
+        messages.warning(request, _('Collaborator not canceled.'))
         
     return redirect('collaborator:list-collaborator')
     
