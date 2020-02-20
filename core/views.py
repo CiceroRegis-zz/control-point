@@ -10,12 +10,23 @@ from django.utils.decorators import method_decorator
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import CreateView, ListView, UpdateView
 from django.views.decorators.http import require_GET
-
+from oauth2_provider.views.generic import ProtectedResourceView
+from django.http import HttpResponse
 
 from collaborator.form import CollaboratorForm
 from collaborator.models import Collaborator, User
 
 from .forms import LoginForm, RegisterForm
+
+
+class ApiEndpoint(ProtectedResourceView):
+    def get(self, request, *args, **kwargs):
+        return HttpResponse('Hello, OAuth2!')
+
+
+@login_required()
+def secret_page(request, *args, **kwargs):
+    return HttpResponse('Secret contents!', status=200)
 
 
 def logout_page(request):

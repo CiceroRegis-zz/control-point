@@ -13,18 +13,22 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from django.conf.urls import url
-from django.contrib import admin
 from django.conf import settings
+from django.conf.urls import url
 from django.conf.urls.static import static
+from django.contrib import admin
 from django.contrib.auth import views as auth_views
+from django.urls import include, path
+
+from core.views import ApiEndpoint
+
 from . import views
-from django.urls import path, include
 
 app_name='collaborator'
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('o/', include('oauth2_provider.urls', namespace='oauth2_provider')), # path to oauth2 config
     path('', views.home, name='home'),
     path('', include('collaborator.urls', namespace='collaborator')),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

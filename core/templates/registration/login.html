@@ -21,6 +21,7 @@
         <input type="text" name="username" id="username" class="form-control" placeholder="Usuário" required autofocus>
         <label for="password" class="sr-only">Senha</label>
         <input type="password" name="password" id="password" class="form-control" placeholder="Senha" required>
+        <input type="hidden" name="next" value="{{ nextToken }}" />
 
         <button class="btn btn-lg btn-primary btn-block" type="submit">Acessar</button>
     </form>
