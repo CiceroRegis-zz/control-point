@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block content %}
-<form method='POST' novalidate>
+<form method='POST'  novalidate>
     {% csrf_token %}
     <div class="col-md-12">
         <div class="row">
@@ -52,13 +52,6 @@
                 <div class="form-group">
                     <label for="landline" class="sr-only">landline</label>
                     {{ form.landline }}
-                </div>
-            </div>
-
-            <div class="col-12">
-                <div class="form-group">
-                    <label for="birth" class="sr-only">landline</label>
-                    {{ form.username }}
                 </div>
             </div>
         </div>

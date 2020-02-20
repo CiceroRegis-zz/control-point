@@ -9,6 +9,8 @@ from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import CreateView, ListView, UpdateView
+from django.views.decorators.http import require_GET
+
 
 from collaborator.form import CollaboratorForm
 from collaborator.models import Collaborator, User
@@ -50,7 +52,6 @@ def registerDataCollaborator(request, *args, **kwargs):
     form = CollaboratorForm(request.POST or None)
     if request.method == "POST":
         if form.is_valid():
-            form = Collaborator(user=request.user, **form)
             form.save()
             form = CollaboratorForm()
             messages.success(request, _("Usuario salvo com sucesso"))
@@ -59,6 +60,40 @@ def registerDataCollaborator(request, *args, **kwargs):
     return render(request, "register/register_collaborator.html", {'form':form})
 
 @login_required
+@require_GET
+def listCollaborators(request):
+    context = {
+        'collaborators': Collaborator.objects.all().order_by('nome')
+    }
+    return render(request, 'collaborator/collaborator_list.html', context)
+
+def updateProfileCollaborator(request, collaborator):
+     c = Collaborator.objects.get(pk=collaborator)
+     if not c:
+        messages.warning(request, _('This collaborator not found.'))
+     else:
+        return redirect('collaborator:list-collaborator')
+    
+    
+@login_required
+@require_GET
+def disableProfileCollaborator(request, collaborator):
+    c = Collaborator.objects.get(pk=collaborator)
+    if not c:
+        messages.warning(request, _('This collaborator not found.'))
+    try:
+       if user.is_active:
+           c.delete()
+           c.save()
+           messages.success(request, _('Reservation canceled.'))
+    except Exception:
+        messages.warning(request, _('Reservation not canceled.'))
+        
+    return redirect('collaborator:list-collaborator')
+    
+
+@login_required
+@require_GET
 def showProfile(request):
     context = {"profile": Collaborator.objects.filter(user=request.user)}
     return render(request, "collaborator/profile_collaborator.html", context)

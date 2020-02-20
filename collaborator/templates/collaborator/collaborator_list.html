@@ -2,17 +2,48 @@
 {% load static %}
 
 {% block content %}
-<br>
-<ul>
-    {% for collaborator in object_list %}
-    <li> {{ collaborator }}</li>
-    {% empty %}
-    <!-- <a href="{% url 'delete_funcionario' funcionario.id %}">
-            Deletar
-        </a> -->
-    <li>Nenhum collaborator cadastrado.</li>
-    {% endfor %}
-</ul>
+<div class="table-responsive-md">
+    <table class="table table-hover table-bordered">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Nome</th>
+                <th scope="col">Sexo</th>
+                <th scope="col">Celular</th>
+                <th scope="col">whatsapp</th>
+                <th scope="col">Telefone Fixo</th>
+                <th scope="col">Data de Nascimento</th>
+            </tr>
+        </thead>
+        {% for collaborator in collaborators %}
+        <tbody>
+            <th scope="row">{{ collaborator.id }}</th>
+
+            <td>
+                <a href="{% url 'collaborator:register_collaborator' %}">
+                {{ collaborator }}
+            </a>
+            </td>
+            <td>{{ collaborator.sexo }}</td>
+            <td>{{ collaborator.phone_number }}</td>
+            {% if collaborator.isWhatsapp %}
+            <td><i class="material-icons" style="color:#42A746">check_circle</i></td>
+            {%else%}
+            <td><i class="material-icons" style="color:#DC3D45">highlight_off</i></td>
+            {%endif%}
+            <td>{{ collaborator.landline }}</td>
+            <td>{{ collaborator.birth | date:'d/m/Y' }}</td>
+            <td>
+                <a href="{% url 'collaborator:disable_profile_collaborator' collaborator.id %}"  class="btn btn-danger">
+                    Deletar
+                </a>
+            </td>
+        </tbody>
+        {% empty %}
+        <div class="alert alert-primary" role="alert">Nenhum colaborador cadastrado.</div>
+        {% endfor %}
+    </table>
+</div>
 <a href="{% url 'collaborator:register_collaborator' %}" class="btn btn-info"> Novo </a>
 
 {% endblock %}
