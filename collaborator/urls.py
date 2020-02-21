@@ -6,8 +6,6 @@ from core.views import (
     listCollaborators,
     disableProfileCollaborator,
     updateProfileCollaborator,
-    ApiEndpoint,
-    secret_page,
 )
 from django.urls import path
 
@@ -24,6 +22,5 @@ urlpatterns = [
     path("accounts/login/", auth_views.LoginView.as_view(), name="login"),
     path("logout/", auth_views.LoginView.as_view(), name="logout"),
     
-    path("api/hello", ApiEndpoint.as_view()),  # an example resource endpoint
-    path("secret/", secret_page, name="secret"),
+    
 ]

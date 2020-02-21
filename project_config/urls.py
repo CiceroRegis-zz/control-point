@@ -20,7 +20,7 @@ from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.urls import include, path
 
-from core.views import ApiEndpoint
+from core.views import ApiEndpoint, CustomTokenView
 
 from . import views
 
@@ -28,7 +28,9 @@ app_name='collaborator'
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path("authenticate/token/", CustomTokenView.as_view(), name="token"),
     path('o/', include('oauth2_provider.urls', namespace='oauth2_provider')), # path to oauth2 config
+    path('api/hello', ApiEndpoint.as_view()), # an example resource endpoint    
     path('', views.home, name='home'),
     path('', include('collaborator.urls', namespace='collaborator')),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
