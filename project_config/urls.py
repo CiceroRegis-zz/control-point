@@ -13,18 +13,20 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from django.conf.urls import url
-from django.contrib import admin
 from django.conf import settings
+from django.conf.urls import url
 from django.conf.urls.static import static
+from django.contrib import admin
 from django.contrib.auth import views as auth_views
-from . import views
-from django.urls import path, include
+from django.urls import include, path
 
-app_name='collaborator'
+from . import views
+
+app_name = 'collaborator'
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', views.home, name='home'),
-    path('', include('collaborator.urls', namespace='collaborator')),
-] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+                  path('admin/', admin.site.urls),
+                  path('', views.home, name='home'),
+                  path('', include('collaborator.urls', namespace='collaborator')),
+                  path('oauth/', include('social_django.urls', namespace='social'))
+              ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
