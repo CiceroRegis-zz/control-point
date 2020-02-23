@@ -13,7 +13,7 @@
 </div>
         {% csrf_token %}
             {% for c in profile %}
-              {{c.nome}}</br>
+             nome {{c.nome}}</br>
               {{c.birth}}
             {% endfor %}
 {% endblock %}

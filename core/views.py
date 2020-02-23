@@ -5,64 +5,24 @@ from django.contrib.auth import authenticate, get_user_model, login, logout
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import redirect, render
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.utils.decorators import method_decorator
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import CreateView, ListView, UpdateView
 from django.views.decorators.http import require_GET
-from oauth2_provider.views.generic import ProtectedResourceView
 from django.http import HttpResponse
-from oauth2_provider.views.base import TokenView
 from django.utils.decorators import method_decorator
 from django.views.decorators.debug import sensitive_post_parameters
-from oauth2_provider.models import get_access_token_model, get_application_model
-
 
 from collaborator.form import CollaboratorForm
 from collaborator.models import Collaborator, User
 
 from .forms import LoginForm, RegisterForm
 
-
-class CustomTokenView(TokenView):
-    @method_decorator(sensitive_post_parameters("password"))
-    def post(self, request, *args, **kwargs):
-        url, headers, body, status = self.create_token_response(request)
-        if status == 200:
-            body = json.loads(body)
-            access_token = body.get("access_token")
-            if access_token is not None:
-                token = get_access_token_model().objects.get(
-                    token=access_token)
-                app_authorized.send(
-                    sender=self, request=request,
-                    token=token)
-                body['member'] = {
-                    'id': token.user.id, 
-                    'username': token.user.username, 
-                    'email': token.user.email
-                }
-                body = json.dumps(body) 
-        response = HttpResponse(content=body, status=status)
-        for k, v in headers.items():
-            response[k] = v
-        return response
-
-
-class ApiEndpoint(ProtectedResourceView):
-    def get(self, request, *args, **kwargs):
-        return HttpResponse('Hello, OAuth2!')
-
-
-@login_required()
-def secret_page(request, *args, **kwargs):
-    return HttpResponse('Secret contents!', status=200)
-
-
-def logout_page(request):
-    context = {"content": "Você efetuou o logout com sucesso!"}
+@login_required
+def logout_view(request):
     logout(request)
-    return render(request, "auth/login.html", context)
+    return redirect("collaborator:logout")
 
 
 User = get_user_model()
