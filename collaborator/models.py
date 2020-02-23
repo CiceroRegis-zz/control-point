@@ -30,7 +30,8 @@ class Collaborator(models.Model):
     landline = models.CharField(max_length=15, blank=True, null=True, verbose_name='landline')
     updateAt = models.DateTimeField(null=False, blank=False, editable=False, auto_now=True)
     createAt = models.DateTimeField(null=False, blank=False, editable=False, auto_now_add=True)
-
+    nextToken = models.CharField(max_length=100)
+    
     def __str__(self):
         return self.nome
 

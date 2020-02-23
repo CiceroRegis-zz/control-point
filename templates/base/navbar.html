@@ -15,12 +15,12 @@
 
     <ul class="nav navbar-nav ml-auto">
             {% if user.is_authenticated %}
-               <p class="mb-0">Bem-vindo(a) <strong>{{ user.username }}</strong></p>
+               <p class="mb-0">Bem-vindo(a) <strong>{{ user.get_full_name }}</strong></p>
             {% endif %}
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle nav-link" data-toggle="dropdown" href="#" role="button"
                aria-haspopup="true" aria-expanded="false">
-                <img src="{% static 'src/img/avatars/6.jpg' %}" class="img-avatar" alt="admin@bootstrapmaster.com">
+                <img src="https://gtrainer.com.br/images/foto_default.png" class="img-avatar" alt="admin@bootstrapmaster.com">
             </a>
             <div class="dropdown-menu dropdown-menu-right">
 

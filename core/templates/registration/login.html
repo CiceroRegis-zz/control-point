@@ -1,29 +1,52 @@
 {% load static %}
 
 {% block css %}
-    {% include 'base/messages.html' %}
-    {% include 'base/css.html' %}
+{% include 'base/css.html' %}
 
-    <link rel="stylesheet" href="{% static 'dist/css/style.min.css' %}">
-    <link rel="stylesheet" href="{% static 'dist/css/signin.css' %}">
+<link rel="stylesheet" href="{% static 'dist/css/style.min.css' %}">
+<link rel="stylesheet" href="{% static 'dist/css/signin.css' %}">
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 {% endblock %}
 
 
 {% block body %}
-    <form action="{% url 'collaborator:login' %}" method="post" class="form-signin">
-        {% csrf_token %}
+<form action="{% url 'collaborator:login' %}" method="post">
+    {% csrf_token %}
 
-        {% if form.errors %}
-                <p class="alert alert-warning" style = " padding:-60px;width:500px; margin-left: -100px;">Seu <strong>usuário e senha</strong> não correspondem. Por favor tente novamente.</p>
-        {% endif %}
+    <div class="wrapper fadeInDown">
+        <div id="formContent">
+            <!-- Tabs Titles -->
+            <!-- Icon -->
+            <div class="fadeIn first">
+                <img src="https://www.b-cube.in/wp-content/uploads/2014/05/aditya-300x177.jpg" id="icon"
+                    alt="User Icon" />
+                <h1>Aditya News</h1>
+            </div>
+            {% if form.errors %}
+            <p class="alert alert-warning" style=" padding:-60px;width:auto;"><strong>Usuário
+                    e Senha</strong> inválidos.</p>
+            {% endif %}
+            <!-- Login Form -->
+            <label for="username" class="sr-only">Usuário</label>
+            <input type="text" id="username" class="fadeIn second" name="username" placeholder="Usuário" required autofocus>
+            <label for="password" class="sr-only">Senha</label>
+            <input type="password" id="password" class="fadeIn third" name="password" placeholder="Senha" required>
+            <!-- <input type="submit" class="fadeIn fourth" value="Log In"> -->
+            <button class="btn btn-outline-info" style="margin-bottom:10px;" type="submit">Log In</button>
+            <!-- Remind Passowrd -->
+       <div id="formFooter">
+           <a class="underlineHover" href="{% url 'social:begin' 'google-oauth2' %}"><img 
+            src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRnBC4-cuGcaTdmJh42LpwBZi_jaaJLA17Wx6SyVoQQ4vszWobG" width="240px;" style="margin-bottom: 20px;" alt=""></a>
+            
 
-        <label for="username" class="sr-only">Usuário</label>
-        <input type="text" name="username" id="username" class="form-control" placeholder="Usuário" required autofocus>
-        <label for="password" class="sr-only">Senha</label>
-        <input type="password" name="password" id="password" class="form-control" placeholder="Senha" required>
-
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Acessar</button>
-    </form>
-    <!--JS-->
-    {% include 'base/js.html' %}
+            <a class="underlineHover" href="{% url 'social:begin' 'github' %}"><img 
+            src="https://cloud.githubusercontent.com/assets/194400/11214293/4e309bf2-8d38-11e5-8d46-b347b2bd242e.png" width="248px;" alt=""></a>
+        </div>
+         
+        </div>
+    </div>
+</form>
+<!--JS-->
+{% include 'base/js.html' %}
 {% endblock %}

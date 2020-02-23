@@ -5,23 +5,24 @@ from django.contrib.auth import authenticate, get_user_model, login, logout
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import redirect, render
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.utils.decorators import method_decorator
 from django.utils.translation import gettext_lazy as _
 from django.views.generic import CreateView, ListView, UpdateView
 from django.views.decorators.http import require_GET
-
+from django.http import HttpResponse
+from django.utils.decorators import method_decorator
+from django.views.decorators.debug import sensitive_post_parameters
 
 from collaborator.form import CollaboratorForm
 from collaborator.models import Collaborator, User
 
 from .forms import LoginForm, RegisterForm
 
-
-def logout_page(request):
-    context = {"content": "Você efetuou o logout com sucesso!"}
+@login_required
+def logout_view(request):
     logout(request)
-    return render(request, "auth/login.html", context)
+    return redirect("collaborator:logout")
 
 
 User = get_user_model()

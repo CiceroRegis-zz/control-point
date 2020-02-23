@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'localflavor',
     'django.contrib.admin',
     'django.contrib.auth',
+    'social_django',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
@@ -51,7 +52,23 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # https://python-social-auth.readthedocs.io/en/latest/configuration/settings.html
+    'social_django.middleware.SocialAuthExceptionMiddleware',
 ]
+
+AUTHENTICATION_BACKENDS = (
+    # https://python-social-auth.readthedocs.io/en/latest/configuration/settings.html
+    'social_core.backends.open_id.OpenIdAuth',
+    'social_core.backends.google.GoogleOpenId',
+    'social_core.backends.google.GoogleOAuth2',
+    'social_core.backends.google.GoogleOAuth',
+    'social_core.backends.github.GithubOAuth2',
+    'social_core.backends.twitter.TwitterOAuth',
+    'social_core.backends.facebook.FacebookOAuth2',
+   
+    'django.contrib.auth.backends.ModelBackend'
+)
+
 
 ROOT_URLCONF = 'project_config.urls'
 
@@ -66,6 +83,9 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                # https://python-social-auth.readthedocs.io/en/latest/configuration/settings.html
+                'social_django.context_processors.backends',
+                'social_django.context_processors.login_redirect',
             ],
         },
     },
@@ -136,3 +156,15 @@ STATICFILES_DIRS = (
 )
 LOGIN_REDIRECT_URL = reverse_lazy('home')
 LOGOUT_URL = reverse_lazy('login')
+
+# SOCIAL_AUTH_GOOGLE
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY  =  '884356889387-tj694bt6ad2u6825f8u8hir0it90kbq1.apps.googleusercontent.com'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET  =  'fln1HhrJjS3BpU2_iH9kRxCT'
+SOCIAL_AUTH_URL_NAMESPACE  =  'social'
+
+# SOCIAL_AUTH_GITHUB
+SOCIAL_AUTH_GITHUB_KEY = '4976ff9ac4c6a8d3bfd7'
+SOCIAL_AUTH_GITHUB_SECRET = 'bc5adb79c891158637bef3519302ad85ab99fa0a'
+
+SOCIAL_AUTH_REVOKE_TOKENS_ON_DISCONNECT = False
+
