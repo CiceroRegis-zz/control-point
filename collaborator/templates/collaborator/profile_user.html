@@ -1,0 +1,35 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block content %}
+{% block css %}
+    <link rel="stylesheet" href="{% static 'dist/css/base.css' %}">
+{% endblock %}
+
+<div class="row wrapper border-bottom bg-white page-heading">
+    <div class="col-lg-10">
+        <h2 class="text-muted profile">Perfil do Profissional</h2>
+        <p class="text-muted" style="margin-bottom: 10px;font-size: 15px;"><strong>Informações sobre o profissional</strong></p>
+    </div>
+</div>
+        {% csrf_token %}
+        {% if user.get_group_permissions %}
+             <strong>nome:</strong> {{ user.collaborator.nome }}</br>
+             {% else %}
+             <p class="mb-0"> <strong>Nome:</strong><span class="badge badge-warning">Seu perfil ainda não está cadastrado</span></p> 
+             {% endif %}
+             {% if user.get_group_permissions %}
+             <strong>E-mail:</strong> <a href="#">{{user.email}}</a></br>
+             {% else %}
+             <p class="mb-0"><strong>E-mail:</strong><span class="badge badge-warning">Seu E-mail ainda não está cadastrado</span></p> 
+             {% endif %}
+             <strong>Status:</strong> 
+             {% if user.is_active %}
+             <td><span class="badge badge-success">ativo</span></td>
+             {%else%}
+             <td><span class="badge badge-danger">highlight_off</span></td>
+             {%endif%}</br>
+             <strong>Ultimo Login: </strong><span class="badge badge-primary">{{ user.last_login }}</span></br>
+             <strong>Data de registro no sistema:</strong> <span class="badge badge-primary">{{ user.date_joined }}</span></br>
+             <strong>data de aniversario:</strong> <span class="badge badge-primary">{{ user.collaborator.birth_date }}</span></br>
+        
+{% endblock %}

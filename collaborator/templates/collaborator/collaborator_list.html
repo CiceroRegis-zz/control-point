@@ -18,12 +18,11 @@
         {% for collaborator in collaborators %}
         <tbody>
             <th scope="row">{{ collaborator.id }}</th>
-
-            <td>
-                <a href="{% url 'collaborator:register_collaborator' %}">
-                {{ collaborator }}
-            </a>
-            </td>
+            {% if collaborator.nome %}
+            <td>{{ collaborator.nome }}</td>
+            {% else %}
+            <td>{{ user }}</td>
+            {% endif %}
             <td>{{ collaborator.sexo }}</td>
             <td>{{ collaborator.phone_number }}</td>
             {% if collaborator.isWhatsapp %}
@@ -32,11 +31,12 @@
             <td><i class="material-icons" style="color:#DC3D45">highlight_off</i></td>
             {%endif%}
             <td>{{ collaborator.landline }}</td>
-            <td>{{ collaborator.birth | date:'d/m/Y' }}</td>
+            <td>{{ collaborator.birth_date | date:'d/m/Y' }}</td>
             <td>
                 <a href="{% url 'collaborator:disable_profile_collaborator' collaborator.id %}"  class="btn btn-danger">
                     Deletar
                 </a>
+                <a href="{% url 'collaborator:update_profile_collaborator' collaborator.id %}">Editar</a>
             </td>
         </tbody>
         {% empty %}

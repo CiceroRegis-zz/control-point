@@ -5,22 +5,48 @@ from collaborator.models import Collaborator
 from django.contrib.auth.models import User
 
 
+class LoginForm(forms.Form):
+    username = forms.CharField()
+    password = forms.CharField(
+        widget=forms.PasswordInput
+    )
+
 class CollaboratorForm(forms.ModelForm):
+    
     nome = forms.CharField(
         error_messages={"required": "Obrigatório o preenchimento do nome"},
         widget=forms.TextInput(
             attrs={"class": "form-control", "placeholder": "Nome completo"}
         ),
     )
-    birth = forms.DateTimeField(
+    
+    user = forms.TextInput()
+
+    email = forms.EmailField(
+        error_messages={'required': 'Obrigatório o preenchimento do E-mail'},
+        widget=forms.TextInput(
+            attrs={'class': 'form-control validate', 'placeholder': 'E-mail', 'type': 'email'}),
+    )
+
+    password = forms.CharField(
+        error_messages={'required': 'Senha obrigatoria'},
+        widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Senha'}),
+    )
+    confirm_password = forms.CharField(
+        error_messages={'required': 'Confirmar senha obrigatoria'},
+        widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Confirmar Senha'}),
+    )
+    
+    birth_date = forms.DateField(
         input_formats=["%d/%m/%Y"],
         error_messages={
             "required": "Obrigatório o preenchimento da data de nascimento"
         },
-        widget=forms.TextInput(
+        widget=forms.DateInput(
             attrs={
-                "class": "form-control datepicker",
+                "class": "form-control",
                 "autocomplete": "off",
+                "id" : "birth_date",
                 "placeholder": "Data de nascimento",
             }
         ),
@@ -33,12 +59,6 @@ class CollaboratorForm(forms.ModelForm):
         ),
     )
 
-    def clean_cpf(self):
-        cpf = self.cleaned_data["cpf"]
-        queryset = Collaborator.objects.filter(cpf=cpf)
-        if queryset.exists():
-            raise forms.ValidationError("Já exite um usuário com este cpf")
-        return cpf
 
     phone_number = forms.CharField(
         error_messages={"required": "Informe um numero de celular"},
