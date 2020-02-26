@@ -1,10 +1,10 @@
 $(document).ready(function () {
 
-    $('.datepicker').datepicker({
-
-        lang: 'pt-BR',
+    $('#datepicker').datepicker({
+        lang: 'pt',
+        format: 'DD/MM/YYYY',                
+        language: 'pt-BR',
         minDate: '-0',
-        format: 'dd/mm/yyyy',
     });
     // var email_re = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
     // var $guest_input = $('textarea[name="guests"]');

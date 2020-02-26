@@ -1,5 +1,17 @@
-{% extends 'base/base.html' %}
 {% load static %}
+
+{% block css %}
+<!--CSS-->
+{% include 'base/css.html' %}
+{% include 'base/messages.html' %}
+
+<!-- <link rel="stylesheet" href="{% static 'dist/css/style.min.css' %}">
+<link rel="stylesheet" href="{% static 'dist/css/signin.css' %}"> -->
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+{% endblock %}
+<!--JS-->
+{% include 'base/js.html' %}
 
 {% block content %}
 <form method='POST' novalidate>
@@ -60,7 +72,7 @@
             <div class="col-md-12">
                 <div class="form-group">
                     <label for="email" class="sr-only">E-mail</label>
-                    {{ user_form.email }}
+                    {{ form.email }}
                 </div>
                 <hr>
             </div>
@@ -71,7 +83,7 @@
                     <div class="col-md-12">
                         <div class="form-group">
                             <label for="username" class="sr-only">Name</label>
-                            {{ user_form.user }}
+                            {{ form.username }}
                         </div>
                     </div>
 
@@ -81,13 +93,13 @@
                     <div class="col-md-12">
                         <div class="form-group">
                             <label for="pwd" class="sr-only">Senha</label>
-                            {{ user_form.password }}
+                            {{ form.password }}
                         </div>
                     </div>
                     <div class="col-md-12">
                         <div class="form-group">
                             <label for="confirm-pwd" class="sr-only">Confirme a senha</label>
-                            {{ user_form.confirm_password }}
+                            {{ form.confirm_password }}
                         </div>
                     </div>
                 </div>

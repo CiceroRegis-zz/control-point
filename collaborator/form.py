@@ -1,26 +1,61 @@
 from django import forms
 from django.utils.translation import gettext_lazy as _
 
-from collaborator.models import Collaborator
+from collaborator.models import Profile
 from django.contrib.auth.models import User
 
 
-class CollaboratorForm(forms.ModelForm):
+class LoginForm(forms.Form):
+    username = forms.CharField()
+    password = forms.CharField(
+        widget=forms.PasswordInput
+    )
+
+class UserForm(forms.ModelForm):
+    
+    class Meta:
+        model = User
+        fields = ['username', 'email', 'password'] 
+        
+    username = forms.CharField(
+        error_messages={"required": "Obrigatório o preenchimento do username"},
+        widget=forms.TextInput(
+            attrs={"class": "form-control", "placeholder": "username completo"}
+        ),
+    )
+    email = forms.EmailField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Email'}),)
+    
+    password = forms.CharField(
+        error_messages={'required': 'Senha obrigatoria'},
+        widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Senha'}),
+    )
+    confirm_password = forms.CharField(
+        error_messages={'required': 'Confirmar senha obrigatoria'},
+        widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Confirmar Senha'}),
+    )
+    
+class ProfileForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        exclude = ('user', "updateAt", "createAt",)
+        
     nome = forms.CharField(
         error_messages={"required": "Obrigatório o preenchimento do nome"},
         widget=forms.TextInput(
             attrs={"class": "form-control", "placeholder": "Nome completo"}
         ),
     )
-    birth = forms.DateTimeField(
+    
+    birth_date = forms.DateField(
         input_formats=["%d/%m/%Y"],
         error_messages={
             "required": "Obrigatório o preenchimento da data de nascimento"
         },
-        widget=forms.TextInput(
+        widget=forms.DateInput(
             attrs={
-                "class": "form-control datepicker",
+                "class": "form-control",
                 "autocomplete": "off",
+                "id" : "birth_date",
                 "placeholder": "Data de nascimento",
             }
         ),
@@ -33,12 +68,6 @@ class CollaboratorForm(forms.ModelForm):
         ),
     )
 
-    def clean_cpf(self):
-        cpf = self.cleaned_data["cpf"]
-        queryset = Collaborator.objects.filter(cpf=cpf)
-        if queryset.exists():
-            raise forms.ValidationError("Já exite um usuário com este cpf")
-        return cpf
 
     phone_number = forms.CharField(
         error_messages={"required": "Informe um numero de celular"},
@@ -77,12 +106,7 @@ class CollaboratorForm(forms.ModelForm):
         ),
     )
 
-    class Meta:
-        model = Collaborator
-        exclude = (
-            "updateAt",
-            "createAt",
-        )
+    
 
     # def __init__(self, username, *args, **kwargs):
     #     super(CollaboratorForm, self).__init__(*args, **kwargs)
