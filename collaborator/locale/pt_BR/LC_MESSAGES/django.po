@@ -1,0 +1,99 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-02-26 14:43-0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: collaborator/admin.py:11 collaborator/models.py:13 collaborator/models.py:14
+msgid "Profile"
+msgstr "Perfil"
+
+#: collaborator/form.py:21
+msgid "Username is required"
+msgstr "Username é obrigatório"
+
+#: collaborator/form.py:29
+msgid "Password is required"
+msgstr "Senha é obrigatório"
+
+#: collaborator/form.py:33
+msgid "Comfirm password is required"
+msgstr "Confima senha é obrigatório"
+
+#: collaborator/form.py:43
+msgid "Name is required"
+msgstr "Nome é obrigatório"
+
+#: collaborator/form.py:52
+msgid "date of birth is required"
+msgstr "data de nascimento é obrigatório"
+
+#: collaborator/form.py:65
+msgid "CPF is required"
+msgstr "CPF é obrigatório"
+
+#: collaborator/form.py:73
+msgid "cell phone is required"
+msgstr "Celular é obrigatório"
+
+#: collaborator/form.py:97 collaborator/models.py:17
+msgid "Male"
+msgstr "Masculino"
+
+#: collaborator/form.py:98 collaborator/models.py:18
+msgid "Female"
+msgstr "Feminino"
+
+#: collaborator/form.py:103
+msgid "Gender field is required"
+msgstr "Campo sexo é obrigatório"
+
+#: collaborator/models.py:21
+msgid "User"
+msgstr "Usuáio"
+
+#: collaborator/models.py:23
+msgid "birth date"
+msgstr "Data de Nascimento"
+
+#: collaborator/models.py:25
+msgid "phone number"
+msgstr "N° Celular"
+
+#: collaborator/models.py:26
+msgid "Is whatsapp"
+msgstr "Whatsapp"
+
+#: collaborator/models.py:27
+msgid "CPF"
+msgstr "CPF"
+
+#: collaborator/models.py:28
+msgid "landline"
+msgstr "N° Residêncial"
+
+#: core/views.py:34
+msgid "Your profile was successfully Saved!"
+msgstr "Seu perfil foi salvo com sucesso!"
+
+#: core/views.py:37 core/views.py:57
+msgid "Please correct the error below."
+msgstr "Por favor corriga os erros abaixo"
+
+#: core/views.py:54
+msgid "Your profile was successfully updated!"
+msgstr "Seu perfil foi atualizado com sucesso"

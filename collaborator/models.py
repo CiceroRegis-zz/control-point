@@ -8,19 +8,24 @@ from django.dispatch import receiver
 
 class Profile(models.Model):
     
+    class Meta:
+        db_table = 'Profile'
+        verbose_name = _('Profile')
+        verbose_name_plural = _('Profile')
+    
     SEXO_CHOICES = (
-        ('M', _('Masculino')),
-        ('F', _('Feminino')),
+        ('M', _('Male')),
+        ('F', _('Female')),
     )
     
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True, verbose_name=_('User'))
     nome = models.CharField(max_length=100)
-    birth_date = models.DateField(null=True, blank=True, verbose_name='birth date')
+    birth_date = models.DateField(null=True, blank=True, verbose_name=_('birth date'))
     sexo = models.CharField(max_length=1, default='', blank=False, null=False, choices=SEXO_CHOICES)
-    phone_number = models.CharField(max_length=15, blank=True, null=True, verbose_name='phone number')
+    phone_number = models.CharField(max_length=15, blank=True, null=True, verbose_name=_('phone number'))
     isWhatsapp = models.BooleanField(default=False, verbose_name=_('Is whatsapp'),)
-    cpf = models.CharField(max_length=15, blank=True, null=True, unique=True, verbose_name='CPF')
-    landline = models.CharField(max_length=15, blank=True, null=True, verbose_name='landline')
+    cpf = models.CharField(max_length=15, blank=True, null=True, unique=True, verbose_name=_('CPF'))
+    landline = models.CharField(max_length=15, blank=True, null=True, verbose_name=_('landline'))
     updateAt = models.DateTimeField(null=False, blank=False, editable=False, auto_now=True)
     createAt = models.DateTimeField(null=False, blank=False, editable=False, auto_now_add=True)
     
