@@ -28,5 +28,4 @@ urlpatterns = [
                   path('admin/', admin.site.urls),
                   path('', views.home, name='home'),
                   path('', include('collaborator.urls', namespace='collaborator')),
-                  path('oauth/', include('social_django.urls', namespace='social'))
               ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
