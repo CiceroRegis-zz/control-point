@@ -136,7 +136,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/2.2/topics/auth/customizing/#substituting-a-custom-user-model
 # AUTH_USER_MODEL = 'collaborator.User'
 
-AUTH_PROFILE_MODULE = 'accounts.Collaborator'
+# AUTH_PROFILE_MODULE = 'accounts.Collaborator'
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/

@@ -5,17 +5,15 @@ from django.contrib.auth import authenticate, get_user_model, login, logout
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import redirect, render
-from django.urls import reverse_lazy, reverse
+from django.urls import reverse, reverse_lazy
 from django.utils.decorators import method_decorator
 from django.utils.translation import gettext_lazy as _
-from django.views.generic import CreateView, ListView, UpdateView
-from django.views.decorators.http import require_GET
-from django.http import HttpResponse
-from django.utils.decorators import method_decorator
 from django.views.decorators.debug import sensitive_post_parameters
+from django.views.decorators.http import require_GET
+from django.views.generic import CreateView, ListView, UpdateView
 
-from collaborator.form import CollaboratorForm
-from collaborator.models import Collaborator, User
+from collaborator.form import ProfileForm, UserForm
+from collaborator.models import Profile, User
 
 
 @login_required
@@ -23,63 +21,61 @@ def logout_view(request):
     logout(request)
     return redirect("collaborator:logout")
 
-@login_required
+
 def registerCollaborator(request):
-    form = CollaboratorForm()
+    user_form = UserForm()
+    form = ProfileForm()
     if request.method == "POST":
-        form = CollaboratorForm(request.POST)
-        if form.is_valid():
+        form = ProfileForm(request.POST)
+        user_form = UserForm(request.POST)
+        if form.is_valid() and user_form.is_valid():
             form.save()
-            form = CollaboratorForm()
-            messages.success(request, _("Usuario cadastrado com sucesso"))
+            user_form.save()
+            messages.success(request, _("Your profile was successfully Saved!"))
+            return redirect("collaborator:logout")
         else:
-            messages.warning(
-                request,_("Não foi possivel salvar os dados. Verifique se os campos estão correto!"),
-            )
-    context = {"form": form}
-    return render(request, "register/register_collaborator.html", context)
+            messages.warning(request,_("Please correct the error below."),)
+    return render(request, "register/create_user_profile.html", {"form": form, 'user_form' : user_form})
 
 
 @login_required
 @require_GET
 def listCollaborators(request):
-    context = {"collaborators": Collaborator.objects.all().order_by("nome")}
+    context = {"profiles": Profile.objects.all().order_by("nome")}
     return render(request, "collaborator/collaborator_list.html", context)
-
-
 
 @login_required
 def updateProfileCollaborator(request, pk):
-    collaborator = Collaborator.objects.get(id=pk)
-    form = CollaboratorForm(instance=collaborator)
-    
+    profile = Profile.objects.get(id=pk)
     if request.method == 'POST':
-        form = CollaboratorForm(request.POST, instance=request.user.collaborator)
-        if form.is_valid():
-                form.save()
-                messages.success(request, _("Usuario atualizado com sucesso"))
-                return redirect("collaborator:list-collaborator")
+        profile_form = ProfileForm(request.POST, instance=profile)
+        if profile_form.is_valid():
+            profile_form.save()
+            messages.success(request, _('Your profile was successfully updated!'))
+            return redirect("collaborator:list-collaborator")
         else:
-            messages.warning(request, _("Por favor corrija o erro abaixo."))
-        
-    context = {"form": form}
-    return render(request, "register/register_collaborator.html", context)
+            messages.warning(request, _('Please correct the error below.'))
+    else:
+        profile_form = ProfileForm(instance=profile)
+    return render(request, 'register/register_collaborator.html', {
+        'form': profile_form
+    })
+    
 
+# @login_required
+# @require_GET
+# def disableProfileCollaborator(request, id):
+#     c = Collaborator.objects.get(pk=collaborator)
+#     if not c:
+#         messages.warning(request, _("This Collaborator not found."))
+#     try:
+#         if c:
+#             c.delete()
+#             messages.success(request, _("Collaborator canceled."))
+#     except Exception:
+#         messages.warning(request, _("Collaborator not canceled."))
 
-@login_required
-@require_GET
-def disableProfileCollaborator(request, collaborator):
-    c = Collaborator.objects.get(pk=collaborator)
-    if not c:
-        messages.warning(request, _("This Collaborator not found."))
-    try:
-        if c:
-            c.delete()
-            messages.success(request, _("Collaborator canceled."))
-    except Exception:
-        messages.warning(request, _("Collaborator not canceled."))
-
-    return redirect("collaborator:list-collaborator")
+#     return redirect("collaborator:list-collaborator")
 
 
 @login_required

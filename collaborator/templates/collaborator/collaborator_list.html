@@ -15,28 +15,21 @@
                 <th scope="col">Data de Nascimento</th>
             </tr>
         </thead>
-        {% for collaborator in collaborators %}
+        {% for profile in profiles %}
         <tbody>
-            <th scope="row">{{ collaborator.id }}</th>
-            {% if collaborator.nome %}
-            <td>{{ collaborator.nome }}</td>
-            {% else %}
-            <td>{{ user }}</td>
-            {% endif %}
-            <td>{{ collaborator.sexo }}</td>
-            <td>{{ collaborator.phone_number }}</td>
-            {% if collaborator.isWhatsapp %}
+            <th scope="row">{{ profile.id }}</th>
+            <td>{{ profile.nome }}</td>
+            <td>{{ profile.sexo }}</td>
+            <td>{{ profile.phone_number }}</td>
+            {% if profile.isWhatsapp %}
             <td><i class="material-icons" style="color:#42A746">check_circle</i></td>
             {%else%}
             <td><i class="material-icons" style="color:#DC3D45">highlight_off</i></td>
             {%endif%}
-            <td>{{ collaborator.landline }}</td>
-            <td>{{ collaborator.birth_date | date:'d/m/Y' }}</td>
+            <td>{{ profile.landline }}</td>
+            <td>{{ profile.birth_date | date:'d/m/Y' }}</td>
             <td>
-                <a href="{% url 'collaborator:disable_profile_collaborator' collaborator.id %}"  class="btn btn-danger">
-                    Deletar
-                </a>
-                <a href="{% url 'collaborator:update_profile_collaborator' collaborator.id %}">Editar</a>
+                <a href="{% url 'collaborator:update_profile_collaborator' profile.id %}" class="btn btn-danger">Editar</a>
             </td>
         </tbody>
         {% empty %}
@@ -44,6 +37,6 @@
         {% endfor %}
     </table>
 </div>
-<a href="{% url 'collaborator:register_collaborator' %}" class="btn btn-info"> Novo </a>
+
 
 {% endblock %}

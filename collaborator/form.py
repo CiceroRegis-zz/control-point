@@ -1,7 +1,7 @@
 from django import forms
 from django.utils.translation import gettext_lazy as _
 
-from collaborator.models import Collaborator
+from collaborator.models import Profile
 from django.contrib.auth.models import User
 
 
@@ -11,23 +11,20 @@ class LoginForm(forms.Form):
         widget=forms.PasswordInput
     )
 
-class CollaboratorForm(forms.ModelForm):
+class UserForm(forms.ModelForm):
     
-    nome = forms.CharField(
-        error_messages={"required": "Obrigatório o preenchimento do nome"},
+    class Meta:
+        model = User
+        fields = ['username', 'email', 'password'] 
+        
+    username = forms.CharField(
+        error_messages={"required": "Obrigatório o preenchimento do username"},
         widget=forms.TextInput(
-            attrs={"class": "form-control", "placeholder": "Nome completo"}
+            attrs={"class": "form-control", "placeholder": "username completo"}
         ),
     )
+    email = forms.EmailField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Email'}),)
     
-    user = forms.TextInput()
-
-    email = forms.EmailField(
-        error_messages={'required': 'Obrigatório o preenchimento do E-mail'},
-        widget=forms.TextInput(
-            attrs={'class': 'form-control validate', 'placeholder': 'E-mail', 'type': 'email'}),
-    )
-
     password = forms.CharField(
         error_messages={'required': 'Senha obrigatoria'},
         widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Senha'}),
@@ -35,6 +32,18 @@ class CollaboratorForm(forms.ModelForm):
     confirm_password = forms.CharField(
         error_messages={'required': 'Confirmar senha obrigatoria'},
         widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Confirmar Senha'}),
+    )
+    
+class ProfileForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        exclude = ('user', "updateAt", "createAt",)
+        
+    nome = forms.CharField(
+        error_messages={"required": "Obrigatório o preenchimento do nome"},
+        widget=forms.TextInput(
+            attrs={"class": "form-control", "placeholder": "Nome completo"}
+        ),
     )
     
     birth_date = forms.DateField(
@@ -97,12 +106,7 @@ class CollaboratorForm(forms.ModelForm):
         ),
     )
 
-    class Meta:
-        model = Collaborator
-        exclude = (
-            "updateAt",
-            "createAt",
-        )
+    
 
     # def __init__(self, username, *args, **kwargs):
     #     super(CollaboratorForm, self).__init__(*args, **kwargs)

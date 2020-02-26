@@ -6,11 +6,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 
-class Collaborator(models.Model):
-    
-    class Meta:
-        db_table = 'Collaborator'
-        verbose_name = _('Collaborator')
+class Profile(models.Model):
     
     SEXO_CHOICES = (
         ('M', _('Masculino')),
@@ -29,13 +25,16 @@ class Collaborator(models.Model):
     createAt = models.DateTimeField(null=False, blank=False, editable=False, auto_now_add=True)
     
     def __str__(self):
-        return self.user.username
+        return self.nome
     
     @receiver(post_save, sender=User)
-    def create_user_collaborator(sender, instance, created, **kwargs):
+    def create_user_profile(sender, instance, created, **kwargs):
         if created:
-            Collaborator.objects.create(user=instance)
-        instance.collaborator.save()
+            Profile.objects.create(user=instance)
+
+    @receiver(post_save, sender=User)
+    def save_user_profile(sender, instance, **kwargs):
+        instance.profile.save()
         
     def birthday(self):
         _birth_date = self.birth_date.strftime('%d/%m/%Y')
