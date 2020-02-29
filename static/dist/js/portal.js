@@ -1,8 +1,8 @@
-$(document).ready(function () {
+$(document).ready(function() {
 
     $('#datepicker').datepicker({
         lang: 'pt',
-        format: 'DD/MM/YYYY',                
+        format: 'DD/MM/YYYY',
         language: 'pt-BR',
         minDate: '-0',
     });
@@ -59,4 +59,6 @@ $(document).ready(function () {
     //    $guest_input.text(emails.join(';'));
     //    this.remove();
     // });
+
+
 });

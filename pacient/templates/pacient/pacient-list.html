@@ -1,0 +1,54 @@
+{% extends 'base/base.html' %} {% load static %} {% block content %}
+
+<div class="row wrapper border-bottom bg-white page-heading" style="margin-bottom: 30px;">
+    <div class="col-lg-10">
+        <h2 class="text-muted profile">Lista de pacientes cadastrados</h2>
+    </div>
+</div>
+<td>
+    <a href="{% url 'pacient:pacient-register' %}" class="fa fa-user-plus btn btn-info" style="margin-bottom: 10px;"> Novo paciente</a>
+</td>
+<div class="table-responsive-md">
+    <table class="table table-hover table-bordered">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Nome</th>
+                <th scope="col">Celular</th>
+                <th scope="col">Telefone Fixo</th>
+                <th scope="col">E-mail</th>
+                <th scope="col">N° Prontuário</th>
+            </tr>
+        </thead>
+        {% for pacient in pacients %}
+        <tbody>
+            <th scope="row">{{ pacient.id }}</th>
+            <td>
+                <a title="Visualizar mais detalhes" href="{% url 'pacient:show-details' pacient.id %}" class="text-muted">{{ pacient.name }}</a></td>
+            {% if pacient.phone_number %}
+            <td>{{ pacient.phone_number }}</td>
+            {% else %}
+            <td><span class="badge badge-danger">Não possui</span></td>
+            {% endif %} {% if pacient.landline %}
+            <td>{{ pacient.landline }}</td>
+            {% else %}
+            <td><span class="badge badge-danger">Não possui</span></td>
+            {% endif %} {% if pacient.email %}
+            <td>{{ pacient.email }}</td>
+            {% else %}
+            <td><span class="badge badge-danger">Não possui</span></td>
+            {% endif %}
+
+            <td>{{ pacient.medical_record_number }}</td>
+
+            <td>
+                <a href="{% url 'pacient:pacient-update' pacient.id %}" class="btn btn-info fa fa-edit" title="Editar paciente"></a>
+            </td>
+        </tbody>
+        {% empty %}
+        <div class="alert alert-primary " role="alert ">Nenhum colaborador cadastrado.</div>
+        {% endfor %}
+    </table>
+</div>
+
+{% endblock %}
