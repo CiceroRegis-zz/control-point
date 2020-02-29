@@ -6,6 +6,18 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 
+class Occupation(models.Model):
+    
+    class Meta:
+        db_table = 'Occupation'
+        verbose_name = _('Occupation')
+        verbose_name_plural = _('Occupation')
+        
+    name = models.CharField(max_length=255, null=False, blank=False, verbose_name=_('name'))
+    updateAt = models.DateTimeField(null=False, blank=False, editable=False, auto_now=True)
+    createAt = models.DateTimeField(null=False, blank=False, editable=False, auto_now_add=True)
+
+
 class Profile(models.Model):
     
     class Meta:
@@ -18,6 +30,7 @@ class Profile(models.Model):
         ('F', _('Female')),
     )
     
+    
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True, verbose_name=_('User'))
     nome = models.CharField(max_length=100)
     birth_date = models.DateField(null=True, blank=True, verbose_name=_('birth date'))
@@ -26,6 +39,8 @@ class Profile(models.Model):
     isWhatsapp = models.BooleanField(default=False, verbose_name=_('Is whatsapp'),)
     cpf = models.CharField(max_length=15, blank=True, null=True, unique=True, verbose_name=_('CPF'))
     landline = models.CharField(max_length=15, blank=True, null=True, verbose_name=_('landline'))
+    occupation = models.CharField()
+
     updateAt = models.DateTimeField(null=False, blank=False, editable=False, auto_now=True)
     createAt = models.DateTimeField(null=False, blank=False, editable=False, auto_now_add=True)
     
@@ -44,4 +59,6 @@ class Profile(models.Model):
     def birthday(self):
         _birth_date = self.birth_date.strftime('%d/%m/%Y')
         return _birth_date
+
+
 
