@@ -16,6 +16,10 @@ class Occupation(models.Model):
     name = models.CharField(max_length=255, null=False, blank=False, verbose_name=_('name'))
     updateAt = models.DateTimeField(null=False, blank=False, editable=False, auto_now=True)
     createAt = models.DateTimeField(null=False, blank=False, editable=False, auto_now_add=True)
+    
+    def __str__(self):
+        return self.name
+    
 
 
 class Profile(models.Model):
@@ -39,7 +43,7 @@ class Profile(models.Model):
     isWhatsapp = models.BooleanField(default=False, verbose_name=_('Is whatsapp'),)
     cpf = models.CharField(max_length=15, blank=True, null=True, unique=True, verbose_name=_('CPF'))
     landline = models.CharField(max_length=15, blank=True, null=True, verbose_name=_('landline'))
-    occupation = models.CharField()
+    occupation = models.ForeignKey(Occupation, on_delete=models.PROTECT, blank=False, null=False, verbose_name=_('occupation'))
 
     updateAt = models.DateTimeField(null=False, blank=False, editable=False, auto_now=True)
     createAt = models.DateTimeField(null=False, blank=False, editable=False, auto_now_add=True)
@@ -52,9 +56,6 @@ class Profile(models.Model):
         if created:
             Profile.objects.create(user=instance)
 
-    @receiver(post_save, sender=User)
-    def save_user_profile(sender, instance, **kwargs):
-        instance.profile.save()
         
     def birthday(self):
         _birth_date = self.birth_date.strftime('%d/%m/%Y')

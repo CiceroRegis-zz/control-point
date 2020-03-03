@@ -10,6 +10,7 @@
                 <th scope="col">whatsapp</th>
                 <th scope="col">Telefone Fixo</th>
                 <th scope="col">Data de Nascimento</th>
+                <th scope="col">Profissão</th>
             </tr>
         </thead>
         {% for profile in profiles %}
@@ -25,8 +26,9 @@
             {%endif%}
             <td>{{ profile.landline }}</td>
             <td>{{ profile.birth_date | date:'d/m/Y' }}</td>
+            <td>{{ profile.occupation }}</td>
             <td>
-                <a href="{% url 'collaborator:update_profile_collaborator' profile.id %}" class="btn btn-danger">Editar</a>
+                <a href="{% url 'collaborator:update_profile_collaborator' profile.id %}" class="btn btn-info fa fa-edit" title="Editar Usuário"></a>
             </td>
         </tbody>
         {% empty %}

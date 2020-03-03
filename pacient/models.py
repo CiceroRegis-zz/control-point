@@ -18,8 +18,8 @@ class Pacient(models.Model):
     )
 
     name = models.CharField(max_length=100, null=True, blank=True, verbose_name=_('Name'))
-    medical_record_number = models.IntegerField(default=random.randrange(25051995, 25051994, -1), null=True, blank=True, editable=False, verbose_name=_('Medical record number'))
-    photo = models.FileField(upload_to='photos', max_length=200, null=True, blank=True)
+    medical_record_number = models.IntegerField(default=random.randint(1, 25052020), null=True, blank=True, editable=False, verbose_name=_('Medical record number'))
+    photo = models.ImageField(upload_to='photos', max_length=200, null=True, blank=True)
     rg_document = models.CharField(max_length=14, null=True, blank=True, verbose_name=_('rg document'))
     cpf_document = models.CharField(max_length=14, null=True, blank=True, verbose_name=_('cpf document'))
     date_of_birth = models.DateField(max_length=14, null=True, blank=True, verbose_name=_('Date of birth'))

@@ -42,7 +42,7 @@
             <td>{{ pacient.medical_record_number }}</td>
 
             <td>
-                <a href="{% url 'pacient:pacient-update' pacient.id %}" class="btn btn-info fa fa-edit" title="Editar paciente"></a>
+                <a href="{% url 'pacient:pacient-update' pacient.id %}?medical_record_number={{ pacient.medical_record_number }}" class="btn btn-info fa fa-edit" title="Editar paciente"></a>
             </td>
         </tbody>
         {% empty %}

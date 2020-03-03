@@ -1,5 +1,6 @@
 from attr.filters import exclude
 from django import forms
+from django.forms.widgets import NumberInput
 from django.utils.translation import gettext_lazy as _
 
 from pacient.models import Pacient
@@ -35,7 +36,7 @@ class PacientForm(forms.ModelForm):
     )
 
     
-    photo = forms.FileField(widget=forms.ClearableFileInput(attrs={'multiple': False}))
+    photo = forms.FileField(widget=forms.ClearableFileInput(attrs={'id':'photo','multiple': False, 'name':'photo', 'value':'Foto'}))
 
     date_of_birth = forms.DateField(
         input_formats=["%d/%m/%Y"],
@@ -114,4 +115,3 @@ class PacientForm(forms.ModelForm):
             }
         ),
     )
-

@@ -6,6 +6,8 @@ $(document).ready(function() {
         language: 'pt-BR',
         minDate: '-0',
     });
+
+    
     // var email_re = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
     // var $guest_input = $('textarea[name="guests"]');
     // var $cont_email_guest = $('.cont_email_guest');

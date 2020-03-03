@@ -11,7 +11,6 @@ $(document).ready(function () {
     var $birth_date = $("#birth_date");
     $birth_date.mask('00/00/0000', { reverse: false });
 
-
   // var $zip_code = $("#CEP");
   // $zip_code.mask('99.999-999', { reverse: true });
 });

@@ -39,16 +39,20 @@ def updatePacient(request, pk):
             messages.warning(request, _("Please correct the error below."))
     else:
         form = PacientForm(instance=pacient)
-    return render(
-        request, "pacient/pacient-register.html", {"form": form}
-    )
+    
+        context = {
+            
+            "form": form,
+            }
+    return render(request, "pacient/pacient-register.html", context)
 
 
 @login_required
 @require_GET
 def pacientList(request):
-    context = {'pacients' : Pacient.objects.all().order_by('name')}
+    context = {'pacients' : Pacient.objects.all().order_by('name'),}
     return render(request, "pacient/pacient-list.html", context)
+
 
 @login_required
 @require_GET
