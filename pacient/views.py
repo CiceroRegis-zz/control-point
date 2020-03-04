@@ -1,8 +1,12 @@
+from queue import Empty
+
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.shortcuts import redirect, render
 from django.utils.translation import gettext_lazy as _
 from django.views.decorators.http import require_GET
+from filebrowser.templatetags.fb_pagination import pagination
 
 from pacient.form import PacientForm
 from pacient.models import Pacient
@@ -50,8 +54,24 @@ def updatePacient(request, pk):
 @login_required
 @require_GET
 def pacientList(request):
-    context = {'pacients' : Pacient.objects.all().order_by('name'),}
+    pacients = Pacient.objects.all().order_by('name')
+    paginator = Paginator(pacients, 2)
+    page = request.GET.get('page', 1)
+    try:
+        pacients = paginator.get_page(page)
+    except PageNotAnInteger:
+        pacients = paginator.get_page(2)
+    except EmptyPage:
+        pacients = paginator.get_page(paginator.num_pages)
+    context = {'pacients' : pacients}
     return render(request, "pacient/pacient-list.html", context)
+
+
+@login_required
+@require_GET
+def researchField(request, name):
+    context = {'researchField' : Pacient.objects.filter(pacient__name_icontains=name)}
+    return render(request, 'pacient/show-details.html', context)
 
 
 @login_required
@@ -59,3 +79,5 @@ def pacientList(request):
 def showDetails(request, pk):
     context = {'showDetails' : Pacient.objects.filter(id=pk)}
     return render(request, 'pacient/show-details.html', context)
+
+

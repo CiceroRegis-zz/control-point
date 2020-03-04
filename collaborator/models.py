@@ -43,7 +43,7 @@ class Profile(models.Model):
     isWhatsapp = models.BooleanField(default=False, verbose_name=_('Is whatsapp'),)
     cpf = models.CharField(max_length=15, blank=True, null=True, unique=True, verbose_name=_('CPF'))
     landline = models.CharField(max_length=15, blank=True, null=True, verbose_name=_('landline'))
-    occupation = models.ForeignKey(Occupation, on_delete=models.PROTECT, blank=False, null=False, verbose_name=_('occupation'))
+    occupation = models.ForeignKey(Occupation, on_delete=models.PROTECT, blank=True, null=True, verbose_name=_('occupation'))
 
     updateAt = models.DateTimeField(null=False, blank=False, editable=False, auto_now=True)
     createAt = models.DateTimeField(null=False, blank=False, editable=False, auto_now_add=True)
