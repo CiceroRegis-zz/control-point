@@ -39,43 +39,42 @@
 -->
 
 <body class="app header-fixed sidebar-fixed aside-menu-fixed aside-menu-hidden">
-<!--Navbar-->
-{% include 'base/navbar.html' %}
+    <!--Navbar-->
+    {% include 'base/navbar.html' %}
 
-<div class="app-body">
-    <!--Sidebar-->
-    {% include 'base/sidebar.html' %}
+    <div class="app-body">
+        <!--Sidebar-->
+        {% include 'base/sidebar.html' %}
 
-    <!-- Main content -->
-    <main class="main">
+        <!-- Main content -->
+        <main class="main">
 
-        <!-- Breadcrumb -->
-        {% include 'base/breadcrumb.html' %}
+            <!-- Breadcrumb -->
+            {% include 'base/breadcrumb.html' %}
 
-
-        <!-- Page contents -->
-        <div class="container-fluid">
-            <!--flag messages-->
-            {% include 'base/messages.html' %}
-            {% block content %}
-            {% endblock %}
-        </div>
-        <!-- /.conainer-fluid -->
-    </main>
+            <!-- Page contents -->
+            <div class="container-fluid">
+                {% include 'base/messages.html' %} 
+                {% block content %} {% endblock %}
+                <!--flag messages-->
+            </div>
+            <!-- /.conainer-fluid -->
+        </main>
 
 
-    <!--Aside bar-->
-    {% include 'base/asidebar.html' %}
+        <!--Aside bar-->
+        {% include 'base/asidebar.html' %}
 
 
-</div>
+    </div>
 
-<!--Footer-->
-{% include 'base/footer.html' %}
-<!--CSS-->
-{% include 'base/css.html' %}
-<!--JS-->
-{% include 'base/js.html' %}
+    <!--Footer-->
+    {% include 'base/footer.html' %}
+    <!--CSS-->
+    {% include 'base/css.html' %}
+    <!--JS-->
+    {% include 'base/js.html' %}
 
 </body>
+
 </html>

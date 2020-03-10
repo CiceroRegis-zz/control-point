@@ -1,11 +1,13 @@
-$(document).ready(function () {
+$(document).ready(function() {
 
     $('#datepicker').datepicker({
         lang: 'pt',
-        format: 'DD/MM/YYYY',                
+        format: 'DD/MM/YYYY',
         language: 'pt-BR',
         minDate: '-0',
     });
+
+    
     // var email_re = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
     // var $guest_input = $('textarea[name="guests"]');
     // var $cont_email_guest = $('.cont_email_guest');
@@ -59,4 +61,6 @@ $(document).ready(function () {
     //    $guest_input.text(emails.join(';'));
     //    this.remove();
     // });
+
+
 });

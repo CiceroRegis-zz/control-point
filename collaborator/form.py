@@ -1,8 +1,8 @@
 from django import forms
+from django.contrib.auth.models import User
 from django.utils.translation import gettext_lazy as _
 
-from collaborator.models import Profile
-from django.contrib.auth.models import User
+from collaborator.models import Occupation, Profile
 
 
 class LoginForm(forms.Form):
@@ -106,11 +106,9 @@ class ProfileForm(forms.ModelForm):
         ),
     )
 
-    
-
-    # def __init__(self, username, *args, **kwargs):
-    #     super(CollaboratorForm, self).__init__(*args, **kwargs)
-    # self.fields['user'].queryset = User.objects.filter(
-    #    username=username)
-
-    #     self.fields['user'].widget.attrs.update({'placeholder': 'Username', 'class': 'form-control'})
+    occupation = forms.ModelChoiceField(
+        error_messages={"required": _("Occupation field is required")},
+            widget=forms.Select(attrs={"class": "form-control", "placeholder": "Profissão",}
+        ),
+        queryset=Occupation.objects.all()
+    )

@@ -3,6 +3,7 @@ import time
 from django.contrib import messages
 from django.contrib.auth import authenticate, get_user_model, login, logout
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.urls import reverse, reverse_lazy
@@ -34,33 +35,48 @@ def registerCollaborator(request):
             messages.success(request, _("Your profile was successfully Saved!"))
             return redirect("collaborator:logout")
         else:
-            messages.warning(request,_("Please correct the error below."),)
-    return render(request, "register/create_user_profile.html", {"form": form, 'user_form' : user_form})
-
+            messages.warning(
+                request, _("Please correct the error below."),
+            )
+    return render(
+        request,
+        "register/create_user_profile.html",
+        {"form": form, "user_form": user_form},
+    )
 
 @login_required
 @require_GET
 def listCollaborators(request):
-    context = {"profiles": Profile.objects.all().order_by("nome")}
+    profiles = Profile.objects.all().order_by('nome')
+    paginator = Paginator(profiles, 1)
+    page = request.GET.get('page', 1)
+    try:
+        profiles = paginator.get_page(page)
+    except PageNotAnInteger:
+        profiles = paginator.get_page(1)
+    except EmptyPage:
+        profiles = paginator.get_page(paginator.num_pages)
+    context = {'profiles' : profiles}
     return render(request, "collaborator/collaborator_list.html", context)
 
+
 @login_required
-def updateProfileCollaborator(request, pk):
+def updateProfile(request, pk):
     profile = Profile.objects.get(id=pk)
-    if request.method == 'POST':
+    if request.method == "POST":
         profile_form = ProfileForm(request.POST, instance=profile)
         if profile_form.is_valid():
             profile_form.save()
-            messages.success(request, _('Your profile was successfully updated!'))
+            messages.success(request, _("Your profile was successfully updated!"))
             return redirect("collaborator:list-collaborator")
         else:
-            messages.warning(request, _('Please correct the error below.'))
+            messages.warning(request, _("Please correct the error below."))
     else:
         profile_form = ProfileForm(instance=profile)
-    return render(request, 'register/register_collaborator.html', {
-        'form': profile_form
-    })
-    
+    return render(
+        request, "register/register_collaborator.html", {"form": profile_form}
+    )
+
 
 # @login_required
 # @require_GET
@@ -83,10 +99,3 @@ def updateProfileCollaborator(request, pk):
 def showProfile(request):
     context = {"profile": User.objects.filter(username=request.user)}
     return render(request, "collaborator/profile_user.html", context)
-
-
-@login_required
-def date_joined(request):
-    context = {"date_joined": request.user.date_joined}
-    date_joined.timedelta(days=3)
-    return render(request, "collaborator/profile_collaborator.html", context)

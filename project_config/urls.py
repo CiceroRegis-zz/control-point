@@ -17,15 +17,20 @@ from django.conf import settings
 from django.conf.urls import url
 from django.conf.urls.static import static
 from django.contrib import admin
+from filebrowser.sites import site
 from django.contrib.auth import views as auth_views
 from django.urls import include, path
 
 from . import views
 
-app_name = 'collaborator'
-
-urlpatterns = [
-                  path('admin/', admin.site.urls),
-                  path('', views.home, name='home'),
-                  path('', include('collaborator.urls', namespace='collaborator')),
-              ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+urlpatterns = (
+    [
+        path('admin/filebrowser/', site.urls),
+        path("admin/", admin.site.urls),
+        path("", views.home, name="home"),
+        path("", include("collaborator.urls", namespace="collaborator")),
+        path("", include("pacient.urls", namespace="pacient")),
+    ]
+    + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+)
