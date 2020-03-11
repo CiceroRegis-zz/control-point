@@ -54,17 +54,22 @@ def updatePacient(request, pk):
 @login_required
 @require_GET
 def pacientList(request):
-    pacients = Pacient.objects.all().order_by('name')
-    paginator = Paginator(pacients, 2)
-    page = request.GET.get('page', 1)
-    try:
-        pacients = paginator.get_page(page)
-    except PageNotAnInteger:
-        pacients = paginator.get_page(2)
-    except EmptyPage:
-        pacients = paginator.get_page(paginator.num_pages)
-    context = {'pacients' : pacients}
-    return render(request, "pacient/pacient-list.html", context)
+
+    search = request.GET.get('search')
+
+    if search:
+        pacients = Pacient.objects.filter(name__icontains=search)
+    else:
+        pacients = Pacient.objects.all().order_by('name')
+        paginator = Paginator(pacients, 10)
+        page = request.GET.get('page', 1)
+        try:
+            pacients = paginator.get_page(page)
+        except PageNotAnInteger:
+            pacients = paginator.get_page(2)
+        except EmptyPage:
+            pacients = paginator.get_page(paginator.num_pages)
+    return render(request, "pacient/pacient-list.html", {'pacients' : pacients})
 
 
 @login_required
