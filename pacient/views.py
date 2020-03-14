@@ -1,12 +1,9 @@
-from queue import Empty
-
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.shortcuts import redirect, render
 from django.utils.translation import gettext_lazy as _
 from django.views.decorators.http import require_GET
-from filebrowser.templatetags.fb_pagination import pagination
 
 from pacient.form import PacientForm
 from pacient.models import Pacient
@@ -17,19 +14,19 @@ def registerPacient(request):
     form = PacientForm()
     if request.method == 'POST':
         form = PacientForm(request.POST, request.FILES)
-    try:    
+    try:
         if form.is_valid():
             form.save()
             form = PacientForm()
             messages.success(request, _("Pacient was successfully Saved!"))
             return redirect("pacient:pacient-list")
         else:
-            context = {'form' : form}
+            context = {'form': form}
             return render(request, 'pacient/pacient-register.html', context)
     except Exception:
         messages.warning(request, _('Error Form'))
-        
-        
+
+
 @login_required
 def updatePacient(request, pk):
     pacient = Pacient.objects.get(id=pk)
@@ -43,18 +40,17 @@ def updatePacient(request, pk):
             messages.warning(request, _("Please correct the error below."))
     else:
         form = PacientForm(instance=pacient)
-    
+
         context = {
-            
+
             "form": form,
-            }
+        }
     return render(request, "pacient/pacient-register.html", context)
 
 
 @login_required
 @require_GET
 def pacientList(request):
-
     search = request.GET.get('search')
 
     if search:
@@ -69,20 +65,18 @@ def pacientList(request):
             pacients = paginator.get_page(2)
         except EmptyPage:
             pacients = paginator.get_page(paginator.num_pages)
-    return render(request, "pacient/pacient-list.html", {'pacients' : pacients})
+    return render(request, "pacient/pacient-list.html", {'pacients': pacients})
 
 
 @login_required
 @require_GET
 def researchField(request, name):
-    context = {'researchField' : Pacient.objects.filter(pacient__name_icontains=name)}
+    context = {'researchField': Pacient.objects.filter(pacient__name_icontains=name)}
     return render(request, 'pacient/show-details.html', context)
 
 
 @login_required
 @require_GET
 def showDetails(request, pk):
-    context = {'showDetails' : Pacient.objects.filter(id=pk)}
+    context = {'showDetails': Pacient.objects.filter(id=pk)}
     return render(request, 'pacient/show-details.html', context)
-
-

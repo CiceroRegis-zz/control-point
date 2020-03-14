@@ -30,6 +30,7 @@ urlpatterns = (
         path("", views.home, name="home"),
         path("", include("collaborator.urls", namespace="collaborator")),
         path("", include("pacient.urls", namespace="pacient")),
+        path("", include("appointment.urls", namespace="appointments")),
     ]
     + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
     + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

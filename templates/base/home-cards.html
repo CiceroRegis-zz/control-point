@@ -21,9 +21,12 @@
     <div class="col-md-3">
       <div class="card-counter danger">
         <i class="fa fa-ticket"></i>
-        <span class="count-numbers">5</span>
+          {% for appointment in appointments %}
+        <span class="count-numbers">{{ appointment.id }}</span>
+          {% endfor %}
         <span class="count-name">Consultas</span>
       </div>
+
     </div>
 
     <div class="col-md-3">

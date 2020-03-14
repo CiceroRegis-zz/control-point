@@ -1,0 +1,64 @@
+{% extends 'base/base.html' %}
+{% block content %}
+{% load static %}
+
+<div class="row wrapper border-bottom bg-white page-heading" style="margin-bottom: 30px;">
+    <div class="col-lg-10">
+        <h2 class="text-muted profile">Formulario de cadastro consultas</h2>
+    </div>
+</div>
+<form enctype="multipart/form-data" method='POST' novalidate>
+    {% csrf_token %}
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-12 more-resources">
+                <div class="form-group">
+                    <a aria-expanded="false" aria-haspopup="true" class="form-control dropdown-toggle"
+                       data-toggle="dropdown"
+                       href="#" id="more_resources" style="width: 190px;">
+                        Tipos de consulta
+                    </a>
+                    <div aria-labelledby="more_resources" class="dropdown-menu">
+                        {% for type_appointment in type_appointments %}
+                        <label class="dropdown-item" for="type_{{ type_appointment.id }}_appointment">
+                            <input id="type_{{ type_appointment.id }}_appointment" name="type_appointment"
+                                   type="checkbox"
+                                   value="{{ type_appointment.id }}"> {{ type_appointment.name }}
+                        </label>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="form-group">
+                        <label class="text-info text-bold">Paciente</label>
+                        {{ form.pacients }}
+                    </div>
+
+                </div>
+
+                <div class="col-12">
+                    <div class="form-group">
+                        <label class="sr-only">professional</label>
+                        {{ form.professional }}
+                    </div>
+                </div>
+
+                <div class="col-12">
+                    <div class="form-group">
+                        <label class="sr-only">date_appointment</label>
+                        {{ form.date_appointment }}
+                    </div>
+                </div>
+
+
+                <div class="row-cols-6">
+                    <div class="form-group">
+                        <button class='btn btn-info' type='submit'>Salvar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+{% endblock %}

@@ -7,6 +7,12 @@ $(document).ready(function() {
         minDate: '-0',
     });
 
+    $('.datetimepicker').datetimepicker({
+        lang: 'pt',
+        minDate:'-0',
+        format: 'd/m/Y H:i'
+    });
+
     
     // var email_re = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
     // var $guest_input = $('textarea[name="guests"]');

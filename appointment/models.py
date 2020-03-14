@@ -31,8 +31,10 @@ class Appointment(models.Model):
                                               verbose_name=_('Type appointment'))
     pacient = models.ForeignKey(Pacient, on_delete=models.PROTECT, verbose_name=_('Pacient'))
     professional = models.ForeignKey(Profile, on_delete=models.PROTECT, verbose_name=_('Professional'))
+    date_appointment = models.DateTimeField(max_length=14, verbose_name=_('date of appointment'))
     updateAt = models.DateTimeField(null=False, blank=False, editable=False, auto_now=True)
     createAt = models.DateTimeField(null=False, blank=False, editable=False, auto_now_add=True)
+
 
     # def get_type_appointment(self):
     #     return "\n".join([p.name for p in self.type_appointment.all()])
