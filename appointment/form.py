@@ -2,7 +2,8 @@ from django import forms
 from django.contrib.auth.models import User
 from django.utils.translation import gettext_lazy as _
 
-from appointment.models import Appointment
+from appointment.models import Appointment, TypeAppointment
+from collaborator.models import Profile
 from pacient.models import Pacient
 
 
@@ -14,16 +15,20 @@ class AppointmentForm(forms.ModelForm):
             "createAt",
         )
 
-    type_appointment = forms.MultipleChoiceField(
+    type_appointment = forms.ModelMultipleChoiceField(
         error_messages={"required": _("type appointment is required")},
         widget=forms.SelectMultiple(
             attrs={
-                "class": "form-control",
+                "class": "form-control js-example-basic-multiple",
+                "name": "type_appointment[]",
+                "multiple": "multiple",
             }
         ),
+        required=False,
+        queryset=TypeAppointment.objects.all(),
     )
 
-    pacients = forms.ModelChoiceField(
+    pacient = forms.ModelChoiceField(
         widget=forms.Select(
             attrs={"class": "form-control", "placeholder": "Paciente"}
         ),
@@ -32,17 +37,15 @@ class AppointmentForm(forms.ModelForm):
 
     professional = forms.ModelChoiceField(
         widget=forms.Select(attrs={"class": "form-control", "placeholder": "Profissional"}),
-        queryset=User.objects.all()
+        queryset=Profile.objects.all()
     )
 
-    date_appointment = forms.DateField(
-        input_formats=["%d/%m/%Y"],
+    date_appointment = forms.DateTimeField(
         error_messages={"required": _("date appointment is required")},
         widget=forms.DateInput(
             attrs={
                 "class": "form-control datetimepicker",
                 "autocomplete": "off",
-                "id": "birth_date",
                 "placeholder": "Data da consulta",
             }
         ),

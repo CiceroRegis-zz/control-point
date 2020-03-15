@@ -13,7 +13,11 @@ $(document).ready(function() {
         format: 'd/m/Y H:i'
     });
 
-    
+    // In your Javascript (external .js resource or <script> tag)
+    $('.js-example-basic-multiple').select2({
+    placeholder: 'Selecione uma opção'
+    });
+
     // var email_re = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
     // var $guest_input = $('textarea[name="guests"]');
     // var $cont_email_guest = $('.cont_email_guest');

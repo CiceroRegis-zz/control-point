@@ -30,8 +30,8 @@ class Appointment(models.Model):
     type_appointment = models.ManyToManyField(TypeAppointment,
                                               verbose_name=_('Type appointment'))
     pacient = models.ForeignKey(Pacient, on_delete=models.PROTECT, verbose_name=_('Pacient'))
-    professional = models.ForeignKey(Profile, on_delete=models.PROTECT, verbose_name=_('Professional'))
-    date_appointment = models.DateTimeField(max_length=14, verbose_name=_('date of appointment'))
+    professional = models.ForeignKey(Profile, on_delete=models.DO_NOTHING, verbose_name=_('Professional'))
+    date_appointment = models.DateTimeField(verbose_name=_('date of appointment'))
     updateAt = models.DateTimeField(null=False, blank=False, editable=False, auto_now=True)
     createAt = models.DateTimeField(null=False, blank=False, editable=False, auto_now_add=True)
 

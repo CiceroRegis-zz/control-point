@@ -22,7 +22,6 @@ def createAppointment(request):
             return redirect("appointments:list-appointments")
         else:
             context = {
-                'type_appointments': TypeAppointment.objects.all(),
                 'form': form
             }
             return render(request, 'appointment/create-appointments.html', context)
@@ -34,12 +33,11 @@ def createAppointment(request):
 @require_GET
 def listAppointment(request):
     search = request.GET.get('search')
-
     if search:
         appointments = Appointment.objects.filter(pacient__name__icontains=search)
     else:
-        appointments = Appointment.objects.all().order_by('-date_appointment')
-        paginator = Paginator(appointments, 5)
+        appointments = Appointment.objects.all().order_by('date_appointment')
+        paginator = Paginator(appointments, 6)
         page = request.GET.get('page', 1)
         try:
             appointments = paginator.get_page(page)
