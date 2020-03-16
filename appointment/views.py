@@ -1,6 +1,7 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from django.db.models import DecimalField, F, ExpressionWrapper, Sum, Count
 from django.shortcuts import render, redirect
 from django.utils.translation import gettext_lazy as _
 from django.views.decorators.http import require_GET
@@ -37,6 +38,8 @@ def listAppointment(request):
         appointments = Appointment.objects.filter(pacient__name__icontains=search)
     else:
         appointments = Appointment.objects.all().order_by('date_appointment')
+        appointments_total = TypeAppointment.objects.filter(
+            appointment=F('price') + F('price')).values('price')
         paginator = Paginator(appointments, 6)
         page = request.GET.get('page', 1)
         try:
@@ -45,7 +48,9 @@ def listAppointment(request):
             appointments = paginator.get_page(2)
         except EmptyPage:
             appointments = paginator.get_page(paginator.num_pages)
-    context = {'appointments': appointments}
+    context = {'appointments': appointments,
+               'appointments_total': appointments_total
+               }
     return render(request, "appointment/list-appointments.html", context)
 
 # @login_required
