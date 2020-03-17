@@ -40,12 +40,12 @@
                 </p>
                 <ul>
                     {% for appointment in appointment.type_appointment.all %}
-                    <li> Tipo de consulta: <b>{{ appointment.name }}</b> ${{ appointment.price }}</li>
+                    <li> Tipo de consulta: <b>{{ appointment.name }}</b> $ {{ appointment.price }}</li>
 
                     {% endfor %}
 
                 </ul>
-                <h5><span class="badge  badge-secondary" style="float:right">Total: ${{ appointments_total }}</span>
+                <h5><span class="badge  badge-secondary" style="float:right">Total: $ {{ appointments_price_total }}</span>
                 </h5>
                 <a class="btn btn-info fa fa-edit" href="#" title="Editar consulta"></a>
                 <a class="btn btn-danger fa fa-ban" href="#" title="Cancelar consulta"></a>
