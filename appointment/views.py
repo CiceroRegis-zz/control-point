@@ -4,7 +4,6 @@ from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.db.models import Sum
 from django.shortcuts import render, redirect
 from django.utils.translation import gettext_lazy as _
-from django.views.decorators.http import require_GET
 
 from appointment.admin import Appointment
 from appointment.form import AppointmentForm
@@ -31,17 +30,15 @@ def createAppointment(request):
 
 
 @login_required
-@require_GET
 def listAppointment(request):
     search = request.GET.get('search')
     if search:
         appointments = Appointment.objects.filter(pacient__name__icontains=search)
     else:
-        appointments = Appointment.objects.all().order_by('date_appointment')
+        appointments = Appointment.objects.all().order_by('-date_appointment')
 
-        total = Appointment.objects.filter(pk__in=[appoint.pacient.pk for appoint in appointments]).aggregate(
-            Sum('type_appointment__price'))
-        appointments_price_total = total['type_appointment__price__sum']
+        appointments_price_total = \
+            Appointment.objects.values('type_appointment__name').annotate(Sum('type_appointment__price'))['type_appointment__price__sum']
         paginator = Paginator(appointments, 6)
         page = request.GET.get('page', 1)
         try:
@@ -51,7 +48,7 @@ def listAppointment(request):
         except EmptyPage:
             appointments = paginator.get_page(paginator.num_pages)
     context = {'appointments': appointments,
-               'appointments_total': appointments_price_total
+               'appointments_price_total': appointments_price_total
                }
     return render(request, "appointment/list-appointments.html", context)
 
