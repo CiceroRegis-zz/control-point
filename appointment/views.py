@@ -1,13 +1,17 @@
 from django.contrib import messages
+import logging
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.db.models import Sum
 from django.shortcuts import render, redirect
 from django.utils.translation import gettext_lazy as _
+from django.views.decorators.http import require_GET
 
 from appointment.admin import Appointment
 from appointment.form import AppointmentForm
 from appointment.models import Appointment
+
+logger = logging.getLogger('django')
 
 
 @login_required
@@ -29,6 +33,21 @@ def createAppointment(request):
         messages.warning(request, _('Error Form'))
 
 
+@require_GET
+def showtotalPrice(request):
+    appointments_price_total = []
+    try:
+        appointments_price_total = \
+            Appointment.objects.values('type_appointment__price').annotate(
+                appointments_price_total=Sum('type_appointment__price'))['appointments_price_total']
+
+    except Exception as e:
+        logger.error(e)
+        print('Ocorreu um erro ao tentar mostrar o preço total')
+
+    return appointments_price_total
+
+
 @login_required
 def listAppointment(request):
     search = request.GET.get('search')
@@ -37,8 +56,6 @@ def listAppointment(request):
     else:
         appointments = Appointment.objects.all().order_by('-date_appointment')
 
-        appointments_price_total = \
-            Appointment.objects.values('type_appointment__name').annotate(Sum('type_appointment__price'))['type_appointment__price__sum']
         paginator = Paginator(appointments, 6)
         page = request.GET.get('page', 1)
         try:
@@ -48,7 +65,7 @@ def listAppointment(request):
         except EmptyPage:
             appointments = paginator.get_page(paginator.num_pages)
     context = {'appointments': appointments,
-               'appointments_price_total': appointments_price_total
+               'appointments_price_total': showtotalPrice(request)
                }
     return render(request, "appointment/list-appointments.html", context)
 
