@@ -4,24 +4,26 @@
     <div class="col-lg-10">
         <h2 class="text-muted profile">Lista de consultas agendadas</h2>
     </div>
+    <h6 class="btn btn-info">
+        Total de consultas <span class="badge badge-light float-right" style="font-size:14px; margin-left:10px;">
+        {{ show_total_values|length }}</span>
+    </h6>
 </div>
 <div class="container">
     <form method="GET">
         <div class="row">
             <td>
-                <a class="fa fa-user-plus btn btn-info" href="{% url 'appointments:create-appointment'%}"
+                <a class="btn btn-info" href="{% url 'appointments:create-appointment'%}"
                    style="margin-bottom: 10px;">
                     Cadastrar nova consulta</a>
             </td>
 
             <div class="form-group align-right col-md-auto mb-2">
                 <label class="sr-only" for="search"></label>
-                <input type="text" class="form-control" id="search" name="search" placeholder="Pesquisar consulta"
+                <input class="form-control" id="search" name="search" placeholder="Pesquisar consulta" type="text"
                        value="{{ request.GET.search }}">
             </div>
-
             <button class="btn btn-primary mb-2" type="submit">Pesquisar</button>
-
         </div>
     </form>
 </div>
@@ -32,9 +34,11 @@
         <div class="card">
             <div class="card-body">
                 <h5 class="card-title ">{{ appointment.pacient }} <span
-                        class="badge {% if appointment %}badge-success {% else %}badge-warning{% endif %}">
+                        class="badge {% if appointment %}badge-success {% else %}badge-danger{% endif %}">
                         {% if appointment %} Consulta agendada
-                        {% else %}Contulta cancelada{% endif %}</span></h5>
+                        {% else %}Consulta cancelada{% endif %}</span>
+                </h5>
+
                 Número do prontuario: <b>{{appointment.pacient.medical_record_number}}</b></br>
                 Medico responsavel: <b>{{ appointment.professional }}</b>
                 <p class="card-text">Data da consulta: <b>{{ appointment.date_appointment | date:'d/m/Y H:i' }}</b>
@@ -59,7 +63,7 @@
     </div>
     {% endif %}
 </div>
-total de agendamentos: {{  appointments.length }}
+
 </div>
 {% if appointments.has_other_pages %}
 <nav aria-label="Page navigation example">

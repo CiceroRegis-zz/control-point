@@ -14,9 +14,13 @@ class ShowtotalPrice(unittest.TestCase):
     #         print("preço total: ", app)
     #     return
 
-    def test_listar_agendamentos_proximos_a_data_atual(self):
-        appointments = Appointment.objects.all().annotate(
-            total=Sum('type_appointment__price')).order_by(
-            '-date_appointment')
-        for app in appointments:
-            print('agendamentos do dia:', app.pacient, "no dia:", app.date_appointment)
+    # def test_listar_agendamentos_proximos_a_data_atual(self):
+    #     appointments = Appointment.objects.all().annotate(
+    #         total=Sum('type_appointment__price')).order_by(
+    #         '-date_appointment')
+    #     for app in appointments:
+    #         print('agendamentos do dia:', app.pacient, "no dia:", app.date_appointment)
+
+    def test_mostrar_total_de_consultas_agendadas(self):
+        appointments = Appointment.objects.all().count()
+        print('total de consultas:', appointments)

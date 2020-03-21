@@ -1,7 +1,6 @@
-from datetime import datetime
+import logging
 
 from django.contrib import messages
-import logging
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.db.models import Sum
@@ -27,12 +26,16 @@ def create_appointment(request):
             messages.success(request, _("Appointment was successfully created!"))
             return redirect("appointments:list-appointments")
         else:
-            context = {
-                'form': form
-            }
+            context = {'form': form}
             return render(request, 'appointment/create-appointments.html', context)
     except Exception:
         messages.warning(request, _('Error Form'))
+
+
+@require_GET
+def show_total_values(request):
+    appointments = Appointment.objects.all()
+    return appointments
 
 
 @login_required
@@ -42,11 +45,10 @@ def list_appointment(request):
         appointments = Appointment.objects.filter(pacient__name__icontains=search).annotate(
             total=Sum('type_appointment__price'))
     else:
-        appointments = Appointment.objects.all().annotate(
-            total=Sum('type_appointment__price')).order_by(
-            'date_appointment')
+        appointments = Appointment.objects.all().annotate(total=Sum('type_appointment__price')) \
+            .order_by('date_appointment')
 
-        paginator = Paginator(appointments, 2)
+        paginator = Paginator(appointments, 5)
         page = request.GET.get('page', 1)
         try:
             appointments = paginator.get_page(page)
@@ -54,12 +56,5 @@ def list_appointment(request):
             appointments = paginator.get_page(2)
         except EmptyPage:
             appointments = paginator.get_page(paginator.num_pages)
-    context = {'appointments': appointments}
+    context = {'appointments': appointments, 'show_total_values': show_total_values(request)}
     return render(request, "appointment/list-appointments.html", context)
-
-# @login_required
-# @require_GET
-# def showValuesCardshome(request):
-#     appointments = Appointment.objects.count()
-#     context = {'appointments': appointments}
-#     return render(request, "base/home-cards.html", context)
