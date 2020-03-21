@@ -45,10 +45,11 @@
                     {% endfor %}
 
                 </ul>
-
-                <h5><span class="badge  badge-secondary" style="float:right">
-                  Total: $ {{ appointments_price_total }}</span>
-                </h5>
+                {% for app in appointments_price_total %}
+                    <h5><span class="badge  badge-secondary" style="float:right">
+                      Total: $ {{ app.total }}</span>
+                    </h5>
+                {% endfor %}
                 <a class="btn btn-info fa fa-edit" href="#" title="Editar consulta"></a>
                 <a class="btn btn-danger fa fa-ban" href="#" title="Cancelar consulta"></a>
 

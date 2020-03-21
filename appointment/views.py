@@ -34,18 +34,10 @@ def createAppointment(request):
 
 
 @require_GET
-def showtotalPrice(request):
-    appointments_price_total = []
-    try:
-        appointments_price_total = \
-            Appointment.objects.values('type_appointment__price').annotate(
-                appointments_price_total=Sum('type_appointment__price'))['appointments_price_total']
-
-    except Exception as e:
-        logger.error(e)
-        print('Ocorreu um erro ao tentar mostrar o preço total')
-
-    return appointments_price_total
+def show_total_price(request):
+    appointments_price_total = Appointment.objects.annotate(total=Sum('type_appointment__price'))
+    if appointments_price_total:
+        return appointments_price_total
 
 
 @login_required
@@ -65,7 +57,7 @@ def listAppointment(request):
         except EmptyPage:
             appointments = paginator.get_page(paginator.num_pages)
     context = {'appointments': appointments,
-               'appointments_price_total': showtotalPrice(request)
+               'appointments_price_total': show_total_price(request)
                }
     return render(request, "appointment/list-appointments.html", context)
 
