@@ -6,17 +6,18 @@
     </div>
 </div>
 <div class="container">
-    <form action="" method="GET">
+    <form method="GET">
         <div class="row">
             <td>
                 <a class="fa fa-user-plus btn btn-info" href="{% url 'appointments:create-appointment'%}"
                    style="margin-bottom: 10px;">
-                    Nova consulta</a>
+                    Cadastrar nova consulta</a>
             </td>
 
             <div class="form-group align-right col-md-auto mb-2">
                 <label class="sr-only" for="search"></label>
-                <input class="form-control" id="search" name="search" placeholder="Pesquisar consulta" type="text">
+                <input type="text" class="form-control" id="search" name="search" placeholder="Pesquisar consulta"
+                       value="{{ request.GET.search }}">
             </div>
 
             <button class="btn btn-primary mb-2" type="submit">Pesquisar</button>
@@ -27,7 +28,7 @@
 
 <div class="row my-reserve">
     {% for appointment in appointments %}
-    <div class="col-sm-6">
+    <div class="col-sm-12">
         <div class="card">
             <div class="card-body">
                 <h5 class="card-title ">{{ appointment.pacient }} <span
@@ -41,18 +42,13 @@
                 <ul>
                     {% for appointment in appointment.type_appointment.all %}
                     <li> Tipo de consulta: <b>{{ appointment.name }}</b> $ {{ appointment.price }}</li>
-
                     {% endfor %}
-
                 </ul>
-                {% for app in appointments_price_total %}
-                    <h5><span class="badge  badge-secondary" style="float:right">
-                      Total: $ {{ app.total }}</span>
-                    </h5>
-                {% endfor %}
+                <h5><span class="badge  badge-secondary" style="float:right">
+                      Total: $ {{ appointment.total }}</span>
+                </h5>
                 <a class="btn btn-info fa fa-edit" href="#" title="Editar consulta"></a>
                 <a class="btn btn-danger fa fa-ban" href="#" title="Cancelar consulta"></a>
-
             </div>
         </div>
     </div>
@@ -63,6 +59,7 @@
     </div>
     {% endif %}
 </div>
+total de agendamentos: {{  appointments.length }}
 </div>
 {% if appointments.has_other_pages %}
 <nav aria-label="Page navigation example">
@@ -100,6 +97,10 @@
             <a class="page-link" href="#" tabindex="-1">&raquo;</a>
         </li>
         {% endif %}
+        <span current="current" style="margin-left:12px;">
+            {{ appointments.number }} de {{ appointments.paginator.num_pages }}
+        </span>
+
     </ul>
 </nav>
 {% endif %}

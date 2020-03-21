@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.contrib import messages
 import logging
 from django.contrib.auth.decorators import login_required
@@ -15,7 +17,7 @@ logger = logging.getLogger('django')
 
 
 @login_required
-def createAppointment(request):
+def create_appointment(request):
     form = AppointmentForm()
     if request.method == 'POST':
         form = AppointmentForm(request.POST)
@@ -33,22 +35,18 @@ def createAppointment(request):
         messages.warning(request, _('Error Form'))
 
 
-@require_GET
-def show_total_price(request):
-    appointments_price_total = Appointment.objects.annotate(total=Sum('type_appointment__price'))
-    if appointments_price_total:
-        return appointments_price_total
-
-
 @login_required
-def listAppointment(request):
+def list_appointment(request):
     search = request.GET.get('search')
     if search:
-        appointments = Appointment.objects.filter(pacient__name__icontains=search)
+        appointments = Appointment.objects.filter(pacient__name__icontains=search).annotate(
+            total=Sum('type_appointment__price'))
     else:
-        appointments = Appointment.objects.all().order_by('-date_appointment')
+        appointments = Appointment.objects.all().annotate(
+            total=Sum('type_appointment__price')).order_by(
+            'date_appointment')
 
-        paginator = Paginator(appointments, 6)
+        paginator = Paginator(appointments, 2)
         page = request.GET.get('page', 1)
         try:
             appointments = paginator.get_page(page)
@@ -56,9 +54,7 @@ def listAppointment(request):
             appointments = paginator.get_page(2)
         except EmptyPage:
             appointments = paginator.get_page(paginator.num_pages)
-    context = {'appointments': appointments,
-               'appointments_price_total': show_total_price(request)
-               }
+    context = {'appointments': appointments}
     return render(request, "appointment/list-appointments.html", context)
 
 # @login_required
