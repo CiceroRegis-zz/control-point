@@ -42,7 +42,7 @@ class AppointmentForm(forms.ModelForm):
 
     date_appointment = forms.DateTimeField(
         error_messages={"required": _("date appointment is required")},
-        widget=forms.DateInput(
+        widget=forms.DateTimeInput(
             attrs={
                 "class": "form-control datetimepicker",
                 "autocomplete": "off",

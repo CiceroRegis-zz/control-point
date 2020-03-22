@@ -34,9 +34,10 @@
         <div class="card">
             <div class="card-body">
                 <h5 class="card-title ">{{ appointment.pacient }} <span
-                        class="badge {% if appointment %}badge-success {% else %}badge-danger{% endif %}">
-                        {% if appointment %} Consulta agendada
-                        {% else %}Consulta cancelada{% endif %}</span>
+                        class="badge {% if appointment.date_now %}badge-success
+                        {% else %} badge-danger {% endif %}">
+                        {% if appointment.date_now %} Consulta agendada
+                        {% else %} Consulta cancelada{% endif %}</span>
                 </h5>
 
                 Número do prontuario: <b>{{appointment.pacient.medical_record_number}}</b></br>
@@ -51,8 +52,14 @@
                 <h5><span class="badge  badge-secondary" style="float:right">
                       Total: $ {{ appointment.total }}</span>
                 </h5>
-                <a class="btn btn-info fa fa-edit" href="#" title="Editar consulta"></a>
-                <a class="btn btn-danger fa fa-ban" href="#" title="Cancelar consulta"></a>
+                <a class="btn btn-info fa fa-edit" href="{% url 'appointments:update-appointment' appointment.id %}"
+                   title="Editar consulta"></a>
+                {% if appointment.date_now %}
+                    <a class="btn btn-secondary fa fa-check" href="{% url 'appointments:start-consultation' appointment.id %}" title="Iniciar consulta"></a>
+                {% endif %}
+                {% if appointment.consulting %}
+                <span class="text-success">Paciente em atendimento</span>
+                {% endif %}
             </div>
         </div>
     </div>

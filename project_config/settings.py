@@ -138,7 +138,7 @@ USE_TZ = True
 # Locale path
 # https://docs.djangoproject.com/en/2.2/ref/settings/#std:setting-LOCALE_PATHS
 LOCALE_PATHS = [
-    os.path.join(BASE_DIR, 'collaborator', 'locale')
+    os.path.join(BASE_DIR, 'core', 'locale')
 ]
 
 # Static files (CSS, JavaScript, Images)

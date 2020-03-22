@@ -21,6 +21,12 @@ class ShowtotalPrice(unittest.TestCase):
     #     for app in appointments:
     #         print('agendamentos do dia:', app.pacient, "no dia:", app.date_appointment)
 
-    def test_mostrar_total_de_consultas_agendadas(self):
-        appointments = Appointment.objects.all().count()
-        print('total de consultas:', appointments)
+    # def test_mostrar_total_de_consultas_agendadas(self):
+    #     appointments = Appointment.objects.all().count()
+    #     print('total de consultas:', appointments)
+
+
+    def test_listar_agendamentos_proximos_a_data_atual(self):
+        appointments = Appointment.objects.filter(date_appointment__lt=datetime.today())
+        for app in appointments:
+            print('agendamentos do dia:', app.pacient, "no dia:", app.date_appointment.strftime("%d-%m-%Y %H:%M:%S"))

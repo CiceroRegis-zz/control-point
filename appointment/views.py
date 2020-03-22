@@ -38,6 +38,14 @@ def show_total_values(request):
     return appointments
 
 
+# @require_GET
+# @login_required
+# def show_total_values(request):
+#     total_values = Appointment.objects.all().count()
+#     context = {'show_total_values': total_values}
+#     return render(request, 'appointment/home-cards.html', context)
+
+
 @login_required
 def list_appointment(request):
     search = request.GET.get('search')
@@ -56,5 +64,41 @@ def list_appointment(request):
             appointments = paginator.get_page(2)
         except EmptyPage:
             appointments = paginator.get_page(paginator.num_pages)
-    context = {'appointments': appointments, 'show_total_values': show_total_values(request)}
+    context = {'appointments': appointments,
+               'show_total_values': show_total_values(request),
+               }
     return render(request, "appointment/list-appointments.html", context)
+
+
+@login_required
+def update_appointment(request, pk):
+    appointment = Appointment.objects.get(id=pk)
+    if request.method == "POST":
+        form = AppointmentForm(request.POST, instance=appointment)
+        if form.is_valid():
+            form.save()
+            messages.success(request, _(
+                "Appointment of " + str(appointment.pacient) + " was successfully updated!"))
+            return redirect("appointments:list-appointments")
+        else:
+            messages.warning(request, _("Please correct the error below."))
+    else:
+        form = AppointmentForm(instance=appointment)
+        context = {"form": form}
+        return render(request, "appointment/create-appointments.html", context)
+
+
+@require_GET
+@login_required
+def start_consultation(request, pk):
+    a = Appointment.objects.get(id=pk)
+
+    if not a.consulting:
+        a.consulting = True
+        a.save()
+        messages.success(request, _('The consultation with the ' + str(a.pacient) + ' has started'))
+    else:
+        a.consulting = False
+        a.save()
+        messages.success(request, _('The consultation with the ' + str(a.pacient) + ' was canceled'))
+    return redirect('appointments:list-appointments')

@@ -7,7 +7,7 @@
         <h2 class="text-muted profile">Formulario de cadastro consultas</h2>
     </div>
 </div>
-<form method='POST' novalidate>
+<form action="" method='POST' novalidate>
     {% csrf_token %}
     <div class="col-md-12">
         <div class="row">
@@ -38,7 +38,6 @@
                     {{ form.date_appointment }}
                 </div>
             </div>
-
 
             <div class="row-cols-6">
                 <div class="form-group">

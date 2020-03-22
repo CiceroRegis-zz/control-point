@@ -15,7 +15,7 @@ $(document).ready(function() {
 
     // In your Javascript (external .js resource or <script> tag)
     $('.js-example-basic-multiple').select2({
-    placeholder: 'Selecione uma opção'
+    placeholder: 'Selecione o consultas para o paciente'
     });
 
     // var email_re = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;

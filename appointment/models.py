@@ -1,3 +1,5 @@
+from datetime import datetime
+from django.utils import timezone
 from django.db import models
 from django.db.models import Sum
 from django.utils.translation import gettext_lazy as _
@@ -33,9 +35,14 @@ class Appointment(models.Model):
     pacient = models.ForeignKey(Pacient, on_delete=models.PROTECT, verbose_name=_('Pacient'))
     professional = models.ForeignKey(Profile, on_delete=models.DO_NOTHING, verbose_name=_('Professional'))
     date_appointment = models.DateTimeField(verbose_name=_('date of appointment'))
+    consulting = models.BooleanField(default=False, verbose_name=_('Consulting'))
     updateAt = models.DateTimeField(null=False, blank=False, editable=False, auto_now=True)
     createAt = models.DateTimeField(null=False, blank=False, editable=False, auto_now_add=True)
 
+    @property
+    def date_now(self):
+        now = timezone.now()
+        return now < self.date_appointment
 
     # def get_type_appointment(self):
     #     return "\n".join([p.name for p in self.type_appointment.all()])
