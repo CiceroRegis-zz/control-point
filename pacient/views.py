@@ -48,6 +48,12 @@ def updatePacient(request, pk):
     return render(request, "pacient/pacient-register.html", context)
 
 
+@require_GET
+def show_total_values(request):
+    patients = Pacient.objects.all()
+    return patients
+
+
 @login_required
 @require_GET
 def pacientList(request):
@@ -65,7 +71,9 @@ def pacientList(request):
             pacients = paginator.get_page(2)
         except EmptyPage:
             pacients = paginator.get_page(paginator.num_pages)
-    return render(request, "pacient/pacient-list.html", {'pacients': pacients})
+        context = {'pacients': pacients,
+                   'show_total_values': show_total_values(request)}
+    return render(request, "pacient/pacient-list.html", context)
 
 
 @login_required

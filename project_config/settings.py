@@ -26,7 +26,7 @@ SECRET_KEY = 'n&*9=_1x&$rmbxi))vr#vu+o=uc7ehc^idfzo%o3yf9@$_0dbn'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -135,6 +135,15 @@ USE_I18N = True
 USE_L10N = True
 USE_TZ = True
 
+
+# Email configuration
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'cicerooliveira091@gmail.com'
+EMAIL_HOST_PASSWORD = 'Meups32015'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+
 # Locale path
 # https://docs.djangoproject.com/en/2.2/ref/settings/#std:setting-LOCALE_PATHS
 LOCALE_PATHS = [
@@ -156,3 +165,21 @@ LOGIN_REDIRECT_URL = reverse_lazy('home')
 LOGOUT_URL = reverse_lazy('login')
 
 
+# LOGGING = {
+#     'version': 1,
+#     'disable_existing_loggers': False,
+#     'handlers': {
+#         'file': {
+#             'level': 'DEBUG',
+#             'class': 'logging.FileHandler',
+#             'filename': '/tmp/debug.log',
+#         },
+#     },
+#     'loggers': {
+#         'django': {
+#             'handlers': ['file'],
+#             'level': 'DEBUG',
+#             'propagate': True,
+#         },
+#     },
+# }

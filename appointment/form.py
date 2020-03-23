@@ -15,6 +15,13 @@ class AppointmentForm(forms.ModelForm):
             "createAt",
         )
 
+        nome = forms.CharField(
+            error_messages={"required": _("Name appointment is required")},
+            widget=forms.TextInput(
+                attrs={"class": "form-control", "placeholder": "Descrição do Atendimento"}
+            ),
+        )
+
     type_appointment = forms.ModelMultipleChoiceField(
         error_messages={"required": _("type appointment is required")},
         widget=forms.SelectMultiple(
