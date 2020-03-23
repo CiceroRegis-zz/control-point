@@ -1,4 +1,4 @@
-django>=2.2.10
+django==2.2.10
 pytz==2019.3
 mysqlclient==1.4.1
 gunicorn==19.9.0
