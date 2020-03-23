@@ -11,20 +11,20 @@ class LoginForm(forms.Form):
         widget=forms.PasswordInput
     )
 
+
 class UserForm(forms.ModelForm):
-    
     class Meta:
         model = User
-        fields = ['username', 'email', 'password'] 
-        
+        fields = ['username', 'email', 'password']
+
     username = forms.CharField(
         error_messages={"required": _("Username is required")},
         widget=forms.TextInput(
             attrs={"class": "form-control", "placeholder": "username"}
         ),
     )
-    email = forms.EmailField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Email'}),)
-    
+    email = forms.EmailField(widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Email'}), )
+
     password = forms.CharField(
         error_messages={'required': _('Password is required')},
         widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Senha'}),
@@ -33,19 +33,20 @@ class UserForm(forms.ModelForm):
         error_messages={'required': _('Comfirm password is required')},
         widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Confirmar Senha'}),
     )
-    
+
+
 class ProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
         exclude = ('user', "updateAt", "createAt",)
-        
+
     nome = forms.CharField(
         error_messages={"required": _("Name is required")},
         widget=forms.TextInput(
             attrs={"class": "form-control", "placeholder": "Nome completo"}
         ),
     )
-    
+
     birth_date = forms.DateField(
         input_formats=["%d/%m/%Y"],
         error_messages={
@@ -55,7 +56,7 @@ class ProfileForm(forms.ModelForm):
             attrs={
                 "class": "form-control",
                 "autocomplete": "off",
-                "id" : "birth_date",
+                "id": "birth_date",
                 "placeholder": "Data de nascimento",
             }
         ),
@@ -67,7 +68,6 @@ class ProfileForm(forms.ModelForm):
             attrs={"class": "form-control", "id": "CPF", "placeholder": "CPF"}
         ),
     )
-
 
     phone_number = forms.CharField(
         error_messages={"required": _("cell phone is required")},
@@ -84,7 +84,7 @@ class ProfileForm(forms.ModelForm):
     landline = forms.CharField(
         required=False,
         widget=forms.TextInput(
-            
+
             attrs={
                 "class": "form-control",
                 "id": "landline",
@@ -99,7 +99,7 @@ class ProfileForm(forms.ModelForm):
     )
 
     sexo = forms.ChoiceField(
-        choices=SEXO_CHOICES,required=True, label='Sexo',
+        choices=SEXO_CHOICES, required=True, label='Sexo',
         error_messages={"required": _("Gender field is required")},
         widget=forms.Select(
             attrs={"name": "select_0", "class": "form-control", "placeholder": "Telefone Fixo"}
@@ -108,7 +108,7 @@ class ProfileForm(forms.ModelForm):
 
     occupation = forms.ModelChoiceField(
         error_messages={"required": _("Occupation field is required")},
-            widget=forms.Select(attrs={"class": "form-control", "placeholder": "Profissão",}
-        ),
+        widget=forms.Select(attrs={"class": "form-control", "placeholder": "Profissão", }
+                            ),
         queryset=Occupation.objects.all()
     )

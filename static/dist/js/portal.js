@@ -7,7 +7,17 @@ $(document).ready(function() {
         minDate: '-0',
     });
 
-    
+    $('.datetimepicker').datetimepicker({
+        lang: 'pt',
+        minDate:'-0',
+        format: 'd/m/Y H:i'
+    });
+
+    // In your Javascript (external .js resource or <script> tag)
+    $('.js-example-basic-multiple').select2({
+    placeholder: 'Selecione o consultas para o paciente'
+    });
+
     // var email_re = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
     // var $guest_input = $('textarea[name="guests"]');
     // var $cont_email_guest = $('.cont_email_guest');

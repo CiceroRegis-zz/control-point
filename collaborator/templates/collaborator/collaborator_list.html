@@ -1,6 +1,27 @@
 {% extends 'base/base.html' %} {% load static %} {% block content %}
 
+<div class="row wrapper border-bottom bg-white page-heading" style="margin-bottom: 30px;">
+    <div class="col-lg-10">
+        <h2 class="text-muted profile">Lista de usuarios cadastrados</h2>
+    </div>
+</div>
+    <form action="" method="GET">
+    <div class="row">
+<!--        <td>-->
+<!--            <a class="fa fa-user-plus btn btn-info" href="{% url 'pacient:pacient-register' %}"-->
+<!--               style="margin-bottom: 10px;">-->
+<!--                Novo paciente</a>-->
+<!--        </td>-->
 
+            <div class="form-group align-right col-md-auto mb-2">
+                <label class="sr-only" for="search"></label>
+                <input class="form-control" id="search" name="search" placeholder="Pesquisar Usuario" type="text">
+            </div>
+
+            <button class="btn btn-primary mb-2" type="submit">Pesquisar</button>
+
+    </div>
+        </form>
 
 <div class="table-responsive-md">
     <table class="table table-hover table-bordered">

@@ -1,6 +1,4 @@
-from attr.filters import exclude
 from django import forms
-from django.forms.widgets import NumberInput
 from django.utils.translation import gettext_lazy as _
 
 from pacient.models import Pacient
@@ -13,7 +11,7 @@ class PacientForm(forms.ModelForm):
             "updateAt",
             "createAt",
         )
-        
+
     name = forms.CharField(
         error_messages={"required": _("name is required")},
         widget=forms.TextInput(
@@ -23,20 +21,21 @@ class PacientForm(forms.ModelForm):
             }
         ),
     )
-    
+
     medical_record_number = forms.IntegerField(
         required=False,
         widget=forms.TextInput(
-            attrs={"class": "form-control", "placeholder": "O número do prontuário é gerado automaticamente", 'readonly':'True'}
+            attrs={"class": "form-control", "placeholder": "O número do prontuário é gerado automaticamente",
+                   'readonly': 'True'}
         ),
     )
-    
+
     email = forms.EmailField(
         widget=forms.TextInput(attrs={"class": "form-control", "placeholder": "Email"}),
     )
 
-    
-    photo = forms.FileField(widget=forms.ClearableFileInput(attrs={'id':'photo','multiple': False, 'name':'photo', 'value':'Foto'}))
+    photo = forms.FileField(
+        widget=forms.ClearableFileInput(attrs={'id': 'photo', 'multiple': False, 'name': 'photo', 'value': 'Foto'}))
 
     date_of_birth = forms.DateField(
         input_formats=["%d/%m/%Y"],
@@ -57,7 +56,7 @@ class PacientForm(forms.ModelForm):
             attrs={"class": "form-control", "id": "CPF", "placeholder": "CPF"}
         ),
     )
-    
+
     rg_document = forms.CharField(
         error_messages={"required": _("RG is required")},
         widget=forms.TextInput(
@@ -86,7 +85,7 @@ class PacientForm(forms.ModelForm):
             }
         ),
     )
-    
+
     address = forms.CharField(
         required=False,
         widget=forms.TextInput(
