@@ -38,36 +38,24 @@ def show_total_values(request):
     return appointments
 
 
-# @require_GET
-# @login_required
-# def show_total_values(request):
-#     total_values = Appointment.objects.all().count()
-#     context = {'show_total_values': total_values}
-#     return render(request, 'appointment/home-cards.html', context)
-
-
 @login_required
 def list_appointment(request):
     form_filter = {}
     search = request.GET.get("search")
+    big_filter = FilterForm(request.GET)
 
-    date_appointment = FilterForm(request.GET)
-    if date_appointment.is_valid():
-        form_filter = date_appointment.cleaned_data
+    if big_filter.is_valid():
+        form_filter = big_filter.cleaned_data
+    if form_filter.get('date_appointment'):
+        appointments = Appointment.objects.filter(date_appointment=form_filter.get('date_appointment')).annotate(
+            total=Sum("type_appointment__price"))
 
-    if form_filter.get("date_appointment"):
+    elif search:
         appointments = Appointment.objects.filter(
-            date_appointment__gte=form_filter.get("date_appointment")
-        )
-    if search:
-        appointments = Appointment.objects.filter(
-            pacient__name__icontains=search
-        ).annotate(total=Sum("type_appointment__price"))
+            patient__name__icontains=search).annotate(total=Sum("type_appointment__price"))
     else:
         appointments = (
-            Appointment.objects.all()
-            .annotate(total=Sum("type_appointment__price"))
-            .order_by("date_appointment")
+            Appointment.objects.all().annotate(total=Sum("type_appointment__price")).order_by("patient")
         )
 
         paginator = Paginator(appointments, 5)
@@ -93,12 +81,8 @@ def update_appointment(request, pk):
         if form.is_valid():
             form.save()
             messages.success(
-                request,
-                _(
-                    "Appointment of "
-                    + str(appointment.pacient)
-                    + " was successfully updated!"
-                ),
+                request, _("Consulta de {0} foi atualizada com sucesso!".format(appointment.patient)
+                           ),
             )
             return redirect("appointments:list-appointments")
         else:
@@ -118,12 +102,12 @@ def start_consultation(request, pk):
         a.consulting = True
         a.save()
         messages.success(
-            request, _("The consultation with the " + str(a.pacient) + " has started")
+            request, _("A consulta com o (a) {0} foi iniciada ".format(a.patient))
         )
     else:
         a.consulting = False
         a.save()
         messages.success(
-            request, _("The consultation with the " + str(a.pacient) + " was canceled")
+            request, _("A consulta com o (a) {0} foi finalizada".format(a.patient))
         )
     return redirect("appointments:list-appointments")

@@ -11,24 +11,29 @@
 </div>
 <div class="container">
     <form method="GET">
-        <div class="row">
-            <td>
-                <a class="btn btn-info" href="{% url 'appointments:create-appointment'%}" style="margin-bottom: 10px;">
-                    Cadastrar nova consulta</a>
-            </td>
+        <div class="col-12">
+            <div class="row">
+                <div class="form-group">
+                    <a class="btn btn-info" href="{% url 'appointments:create-appointment'%}"
+                       style="margin-bottom: 10px;">
+                        Cadastrar nova consulta</a>
+                </div>
 
-            <div class="form-group align-right col-md-auto mb-2">
-                <label class="sr-only" for="search"></label>
-                <input class="form-control" id="search" name="search" placeholder="Pesquisar consulta" type="text"
-                    value="{{ request.GET.search }}">
+                <div class="form-group col-md-4">
+                    <label class="sr-only" for="search"></label>
+                    <input class="form-control" id="search" name="search" placeholder="Pesquisar por nome do paciente" type="text"
+                           value="{{ request.GET.search }}">
+                </div>
+                <div class="form-group col-md-4">
+                    <label class="sr-only" for="date_appointment">Data do agendamento</label>
+                    <input autocomplete="off" class="form-control datetimepicker" id="date_appointment" name="date_appointment"
+                           placeholder="Pesquisar por data de agendamento" type="text"
+                           value="{{ form.date_appointment | date:'d/m/Y H:i' }}">
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-primary mb-2" type="submit">Pesquisar</button>
+                </div>
             </div>
-            <div class="form-group align-right col-md-4 col-sm-6">
-                <label class="sr-only" for="date">Data do agendamento</label>
-                <input autocomplete="off" class="form-control datetimepicker" id="date" name="date_appointment"
-                    placeholder="Pesquisar por data de agendamento" type="text"
-                    value="{{ date_appointment | date:'d/m/Y H:i' }}">
-            </div>
-            <button class="btn btn-primary mb-2" type="submit">Pesquisar</button>
         </div>
     </form>
 </div>
@@ -38,13 +43,13 @@
     <div class="col-sm-12">
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title ">{{ appointment.pacient }} <span class="badge {% if appointment.date_now %}badge-success
+                <h5 class="card-title ">{{ appointment.patient }} <span class="badge {% if appointment.date_now %}badge-success
                         {% else %} badge-danger {% endif %}">
                         {% if appointment.date_now %} Consulta agendada
                         {% else %} Consulta cancelada{% endif %}</span>
                 </h5>
 
-                Número do prontuario: <b>{{appointment.pacient.medical_record_number}}</b></br>
+                Número do prontuario: <b>{{appointment.patient.medical_record_number}}</b></br>
                 Medico responsavel: <b>{{ appointment.professional }}</b>
                 <p class="card-text">Data da consulta: <b>{{ appointment.date_appointment | date:'d/m/Y H:i' }}</b>
                 </p>
@@ -57,10 +62,10 @@
                         Total: $ {{ appointment.total }}</span>
                 </h5>
                 <a class="btn btn-info fa fa-edit" href="{% url 'appointments:update-appointment' appointment.id %}"
-                    title="Editar consulta"></a>
+                   title="Editar consulta"></a>
                 {% if appointment.date_now %}
                 <a class="btn btn-secondary fa fa-check"
-                    href="{% url 'appointments:start-consultation' appointment.id %}" title="Iniciar consulta"></a>
+                   href="{% url 'appointments:start-consultation' appointment.id %}" title="Iniciar consulta"></a>
                 {% endif %}
                 {% if appointment.consulting and appointment.date_now %}
                 <span class="text-success">Paciente em atendimento</span>

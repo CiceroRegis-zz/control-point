@@ -1,14 +1,14 @@
 from django import forms
-from django.contrib.auth.models import User
 from django.utils.translation import gettext_lazy as _
 
 from appointment.models import Appointment, TypeAppointment
 from collaborator.models import Profile
-from pacient.models import Pacient
+from patient.models import Patient
 
 
 class FilterForm(forms.Form):
     date_appointment = forms.DateTimeField(required=True)
+
 
 class AppointmentForm(forms.ModelForm):
     class Meta:
@@ -18,10 +18,10 @@ class AppointmentForm(forms.ModelForm):
             "createAt",
         )
 
-        name = forms.CharField(
+    description = forms.CharField(
             error_messages={"required": _("Name appointment is required")},
             widget=forms.TextInput(
-                attrs={"class": "form-control", "placeholder": "Descrição do Atendimento"}
+                attrs={"class": "form-control", "placeholder": "Informe a descrição do Atendimento"}
             ),
         )
 
@@ -38,11 +38,14 @@ class AppointmentForm(forms.ModelForm):
         queryset=TypeAppointment.objects.all(),
     )
 
-    pacient = forms.ModelChoiceField(
-        widget=forms.Select(
-            attrs={"class": "form-control", "placeholder": "Paciente"}
+    patient = forms.ModelMultipleChoiceField(
+        widget=forms.SelectMultiple(
+            attrs={"class": "form-control e1",
+                   "placeholder": "Paciente",
+                   "name": "patient[]",
+                   }
         ),
-        queryset=Pacient.objects.all()
+        queryset=Patient.objects.all()
     )
 
     professional = forms.ModelChoiceField(

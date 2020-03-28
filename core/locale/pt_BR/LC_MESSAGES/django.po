@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-03-21 21:22-0300\n"
+"POT-Creation-Date: 2020-03-28 11:27-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,177 +18,251 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
+#: appointment/form.py:22
+msgid "Name appointment is required"
+msgstr "data de nascimento é obrigatório"
+
+#: appointment/form.py:29
+msgid "type appointment is required"
+msgstr "Celular é obrigatório"
+
+#: appointment/form.py:54
+msgid "date appointment is required"
+msgstr "data de nascimento é obrigatório"
+
+#: appointment/models.py:24
+msgid "Notify to pacientes appointments"
+msgstr "Tipos de consulta"
+
+#: appointment/models.py:29 appointment/models.py:30
+msgid "Notification Support Team"
+msgstr ""
+
+#: appointment/models.py:32
+msgid "Action"
+msgstr "Profissão"
+
+#: appointment/models.py:33 appointment/models.py:65
+msgid "Patient"
+msgstr "Patient"
+
+#: appointment/models.py:44 appointment/models.py:45
+msgid "typeAppointment"
+msgstr "Tipo de Consulta"
+
+#: appointment/models.py:47 pacient/models.py:20
+msgid "Name"
+msgstr "Nome"
+
+#: appointment/models.py:48
+msgid "Skip"
+msgstr "Falta"
+
+#: appointment/models.py:49
+msgid "Price of appointment"
+msgstr "Preço da consulta"
+
+#: appointment/models.py:60 appointment/models.py:61
+msgid "appointment"
+msgstr "Consulta"
+
+#: appointment/models.py:62
+#, fuzzy
+#| msgid "appointment"
+msgid "Appointment name"
+msgstr "Consulta"
+
+#: appointment/models.py:64
+msgid "Type appointment"
+msgstr "Tipos de consulta"
+
+#: appointment/models.py:66
+msgid "Professional"
+msgstr "Perfil"
+
+#: appointment/models.py:67
+msgid "date of appointment"
+msgstr "data da consulta"
+
+#: appointment/models.py:68
+msgid "Consulting"
+msgstr "Consultando"
+
+#: appointment/views.py:27
+msgid "Appointment was successfully created!"
+msgstr "Consulta atualizado com sucesso"
+
+#: appointment/views.py:33 pacient/views.py:27
+msgid "Error Form"
+msgstr "Erro no formulario"
+
+#: appointment/views.py:89
+#, fuzzy
+#| msgid "appointment"
+msgid "Appointment of "
+msgstr "Consulta"
+
+#: appointment/views.py:96 core/views.py:39 core/views.py:78
+#: pacient/views.py:40
+msgid "Please correct the error below."
+msgstr "Por favor corriga os erros abaixo"
+
+#: appointment/views.py:112
+#, python-brace-format
+msgid "The consultation with the {0} has started"
+msgstr "A consulta com o(a) {0} foi iniciada"
+
+#: appointment/views.py:118
+#, python-brace-format
+msgid "The consultation with the {0} was canceled"
+msgstr "A consulta com o(a) {0} foi cancelada"
+
 #: collaborator/admin.py:14 collaborator/models.py:25 collaborator/models.py:26
+#, fuzzy
+#| msgid "Professional"
 msgid "Profile"
 msgstr "Perfil"
 
 #: collaborator/form.py:21
+#, fuzzy
+#| msgid "name is required"
 msgid "Username is required"
-msgstr "Username é obrigatório"
+msgstr "Nome é obrigatório"
 
 #: collaborator/form.py:29
+#, fuzzy
+#| msgid "CPF is required"
 msgid "Password is required"
-msgstr "Senha é obrigatório"
+msgstr "CPF é obrigatório"
 
 #: collaborator/form.py:33
+#, fuzzy
+#| msgid "CPF is required"
 msgid "Comfirm password is required"
-msgstr "Confima senha é obrigatório"
+msgstr "CPF é obrigatório"
 
 #: collaborator/form.py:44
+#, fuzzy
+#| msgid "name is required"
 msgid "Name is required"
 msgstr "Nome é obrigatório"
 
-#: collaborator/form.py:53
+#: collaborator/form.py:53 pacient/form.py:42
 msgid "date of birth is required"
 msgstr "data de nascimento é obrigatório"
 
-#: collaborator/form.py:66
+#: collaborator/form.py:66 pacient/form.py:54
 msgid "CPF is required"
 msgstr "CPF é obrigatório"
 
-#: collaborator/form.py:73
+#: collaborator/form.py:73 pacient/form.py:68
 msgid "cell phone is required"
 msgstr "Celular é obrigatório"
 
-#: collaborator/form.py:97 collaborator/models.py:29
+#: collaborator/form.py:97 collaborator/models.py:29 pacient/form.py:100
+#: pacient/models.py:16
 msgid "Male"
 msgstr "Masculino"
 
-#: collaborator/form.py:98 collaborator/models.py:30
+#: collaborator/form.py:98 collaborator/models.py:30 pacient/form.py:101
+#: pacient/models.py:17
 msgid "Female"
 msgstr "Feminino"
 
-#: collaborator/form.py:103
+#: collaborator/form.py:103 pacient/form.py:108
 msgid "Gender field is required"
 msgstr "Campo sexo é obrigatório"
 
 #: collaborator/form.py:110
+#, fuzzy
+#| msgid "Gender field is required"
 msgid "Occupation field is required"
 msgstr "Campo sexo é obrigatório"
 
 #: collaborator/models.py:11 collaborator/models.py:12
+#, fuzzy
+#| msgid "Action"
 msgid "Occupation"
 msgstr "Profissão"
 
 #: collaborator/models.py:14
 msgid "name"
-msgstr "Nome"
+msgstr ""
 
 #: collaborator/models.py:33
 msgid "User"
-msgstr "Usuáio"
+msgstr ""
 
 #: collaborator/models.py:35
 msgid "birth date"
-msgstr "Data de Nascimento"
+msgstr ""
 
-#: collaborator/models.py:37
+#: collaborator/models.py:37 pacient/models.py:26
 msgid "phone number"
 msgstr "N° Celular"
 
 #: collaborator/models.py:38
 msgid "Is whatsapp"
-msgstr "Whatsapp"
+msgstr ""
 
 #: collaborator/models.py:39
 msgid "CPF"
-msgstr "CPF"
+msgstr ""
 
-#: collaborator/models.py:40
+#: collaborator/models.py:40 pacient/models.py:27
 msgid "landline"
 msgstr "N° Residêncial"
 
 #: collaborator/models.py:42
+#, fuzzy
+#| msgid "Action"
 msgid "occupation"
 msgstr "Profissão"
 
-#, fuzzy
-#~| msgid "cell phone is required"
-#~ msgid "type appointment is required"
-#~ msgstr "Celular é obrigatório"
+#: core/views.py:35
+msgid "Your profile was successfully Saved!"
+msgstr "Seu perfil foi salvo com sucesso!"
 
-#, fuzzy
-#~| msgid "date of birth is required"
-#~ msgid "date appointment is required"
-#~ msgstr "data de nascimento é obrigatório"
+#: core/views.py:75
+msgid "Your profile was successfully updated!"
+msgstr "Seu perfil foi atualizado com sucesso"
 
-#~ msgid "typeAppointment"
-#~ msgstr "Tipo de Consulta"
+#: pacient/form.py:16
+msgid "name is required"
+msgstr "Nome é obrigatório"
 
-#~ msgid "Name"
-#~ msgstr "Nome"
+#: pacient/form.py:61
+msgid "RG is required"
+msgstr "CPF é obrigatório"
 
-#~ msgid "Skip"
-#~ msgstr "Falta"
+#: pacient/models.py:12 pacient/models.py:13
+msgid "pacient"
+msgstr "Paciente"
 
-#~ msgid "Price of appointment"
-#~ msgstr "Preço da consulta"
+#: pacient/models.py:21
+msgid "Medical record number"
+msgstr "Número do Prontuário"
 
-#~ msgid "appointment"
-#~ msgstr "Consulta"
+#: pacient/models.py:23
+msgid "rg document"
+msgstr "RG"
 
-#~ msgid "Type appointment"
-#~ msgstr "Tipos de consulta"
+#: pacient/models.py:24
+msgid "cpf document"
+msgstr "CPF"
 
-#~ msgid "Pacient"
-#~ msgstr "Pacient"
+#: pacient/models.py:25
+msgid "Date of birth"
+msgstr "data de nascimento é obrigatório"
 
-#~ msgid "Professional"
-#~ msgstr "Perfil"
+#: pacient/models.py:29
+msgid "Address"
+msgstr "Endereço"
 
-#~ msgid "date of appointment"
-#~ msgstr "data da consulta"
+#: pacient/views.py:21
+msgid "Patient was successfully Saved!"
+msgstr "Seu perfil foi salvo com sucesso!"
 
-#~ msgid "Consulting"
-#~ msgstr "Consultando"
-
-#~ msgid "Appointment was successfully created!"
-#~ msgstr "Consulta atualizado com sucesso"
-
-#~ msgid "Error Form"
-#~ msgstr "Erro no formulario"
-
-#~ msgid "Appointment of "
-#~ msgstr "Consulta de "
-
-#~ msgid "Please correct the error below."
-#~ msgstr "Por favor corriga os erros abaixo"
-
-#~ msgid "The consultation with the "
-#~ msgstr "A consulta com o "
-
-#~ msgid "Your profile was successfully Saved!"
-#~ msgstr "Seu perfil foi salvo com sucesso!"
-
-#~ msgid "Your profile was successfully updated!"
-#~ msgstr "Seu perfil foi atualizado com sucesso"
-
-#~ msgid "name is required"
-#~ msgstr "Nome é obrigatório"
-
-#~ msgid "RG is required"
-#~ msgstr "CPF é obrigatório"
-
-#~ msgid "pacient"
-#~ msgstr "Paciente"
-
-#~ msgid "Medical record number"
-#~ msgstr "Número do Prontuário"
-
-#~ msgid "rg document"
-#~ msgstr "RG"
-
-#~ msgid "cpf document"
-#~ msgstr "CPF"
-
-#~ msgid "Date of birth"
-#~ msgstr "data de nascimento é obrigatório"
-
-#~ msgid "Address"
-#~ msgstr "Endereço"
-
-#~ msgid "Pacient was successfully Saved!"
-#~ msgstr "Seu perfil foi salvo com sucesso!"
-
-#~ msgid "Pacient was successfully updated!"
-#~ msgstr "Seu perfil foi atualizado com sucesso"
+#: pacient/views.py:37
+msgid "Patient was successfully updated!"
+msgstr "Seu perfil foi atualizado com sucesso"

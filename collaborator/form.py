@@ -40,7 +40,7 @@ class ProfileForm(forms.ModelForm):
         model = Profile
         exclude = ('user', "updateAt", "createAt",)
 
-    name = forms.CharField(
+    nome = forms.CharField(
         error_messages={"required": _("Name is required")},
         widget=forms.TextInput(
             attrs={"class": "form-control", "placeholder": "Nome completo"}
