@@ -7,6 +7,9 @@ from collaborator.models import Profile
 from pacient.models import Pacient
 
 
+class FilterForm(forms.Form):
+    date_appointment = forms.DateTimeField(required=True)
+
 class AppointmentForm(forms.ModelForm):
     class Meta:
         model = Appointment

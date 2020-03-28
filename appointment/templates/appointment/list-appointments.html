@@ -6,28 +6,27 @@
     </div>
     <p class="btn btn-info btn-sm" style="float:right;" type="button">
         Total de consultas <span class="badge badge-light" style="font-size:14px; margin-left:10px;">
-        {{ show_total_values|length }}</span>
+            {{ show_total_values|length }}</span>
     </p>
 </div>
 <div class="container">
     <form method="GET">
         <div class="row">
             <td>
-                <a class="btn btn-info" href="{% url 'appointments:create-appointment'%}"
-                   style="margin-bottom: 10px;">
+                <a class="btn btn-info" href="{% url 'appointments:create-appointment'%}" style="margin-bottom: 10px;">
                     Cadastrar nova consulta</a>
             </td>
 
             <div class="form-group align-right col-md-auto mb-2">
                 <label class="sr-only" for="search"></label>
                 <input class="form-control" id="search" name="search" placeholder="Pesquisar consulta" type="text"
-                       value="{{ request.GET.search }}">
+                    value="{{ request.GET.search }}">
             </div>
             <div class="form-group align-right col-md-4 col-sm-6">
                 <label class="sr-only" for="date">Data do agendamento</label>
-                <input autocomplete="off" class="form-control datetimepicker"
-                       id="date" name="date_appointment" placeholder="Pesquisar por data de agendamento" required
-                       type="text" value="{{ form.date_appointment | date:'d/m/Y H:i' }}">
+                <input autocomplete="off" class="form-control datetimepicker" id="date" name="date_appointment"
+                    placeholder="Pesquisar por data de agendamento" type="text"
+                    value="{{ date_appointment | date:'d/m/Y H:i' }}">
             </div>
             <button class="btn btn-primary mb-2" type="submit">Pesquisar</button>
         </div>
@@ -39,8 +38,7 @@
     <div class="col-sm-12">
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title ">{{ appointment.pacient }} <span
-                        class="badge {% if appointment.date_now %}badge-success
+                <h5 class="card-title ">{{ appointment.pacient }} <span class="badge {% if appointment.date_now %}badge-success
                         {% else %} badge-danger {% endif %}">
                         {% if appointment.date_now %} Consulta agendada
                         {% else %} Consulta cancelada{% endif %}</span>
@@ -56,13 +54,13 @@
                     {% endfor %}
                 </ul>
                 <h5><span class="badge  badge-secondary" style="float:right">
-                      Total: $ {{ appointment.total }}</span>
+                        Total: $ {{ appointment.total }}</span>
                 </h5>
                 <a class="btn btn-info fa fa-edit" href="{% url 'appointments:update-appointment' appointment.id %}"
-                   title="Editar consulta"></a>
+                    title="Editar consulta"></a>
                 {% if appointment.date_now %}
                 <a class="btn btn-secondary fa fa-check"
-                   href="{% url 'appointments:start-consultation' appointment.id %}" title="Iniciar consulta"></a>
+                    href="{% url 'appointments:start-consultation' appointment.id %}" title="Iniciar consulta"></a>
                 {% endif %}
                 {% if appointment.consulting and appointment.date_now %}
                 <span class="text-success">Paciente em atendimento</span>
