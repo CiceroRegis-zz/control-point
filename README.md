@@ -1,4 +1,4 @@
-### Scheduling dental appointments for patients in Django###
+### Scheduling dental appointments for patients in Django ###
 
 > simple application for scheduling dental appointments for patients.
 
