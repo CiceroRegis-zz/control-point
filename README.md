@@ -1,4 +1,4 @@
-### Control Point with django ###
+### Scheduling dental appointments for patients in Django###
 
 > simple application for scheduling dental appointments for patients.
 
