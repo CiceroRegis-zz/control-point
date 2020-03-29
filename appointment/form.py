@@ -39,14 +39,14 @@ class AppointmentForm(forms.ModelForm):
     )
 
     patient = forms.ModelChoiceField(
-        widget=forms.SelectMultiple(
+        widget=forms.Select(
             attrs={"class": "form-control js-example-placeholder-single"}
         ),
         queryset=Patient.objects.all()
     )
 
     professional = forms.ModelChoiceField(
-        widget=forms.SelectMultiple(attrs={"class": "form-control js-example-placeholder-single2"}),
+        widget=forms.Select(attrs={"class": "form-control js-example-placeholder-single2"}),
         queryset=Profile.objects.all()
     )
 

@@ -13,20 +13,20 @@ $(document).ready(function() {
         format: 'd/m/Y H:i'
     });
 
-    $(".js-example-placeholder-single2").select2({
-      placeholder: "Selecione o Medico",
-      maximumSelectionLength: 1
+       // In your Javascript (external .js resource or <script> tag)
+    $('.js-example-basic-multiple').select2({
+    placeholder: 'Selecione a consultas para o paciente'
     });
 
      $(".js-example-placeholder-single").select2({
       placeholder: "Selecione o paciente",
-      maximumSelectionLength: 1
     });
 
-    // In your Javascript (external .js resource or <script> tag)
-    $('.js-example-basic-multiple').select2({
-    placeholder: 'Selecione a consultas para o paciente'
+    $(".js-example-placeholder-single2").select2({
+      placeholder: "Selecione o Medico",
     });
+
+
 
 
 

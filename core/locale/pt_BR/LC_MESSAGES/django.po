@@ -90,7 +90,7 @@ msgstr "Consultando"
 
 #: appointment/views.py:27
 msgid "Appointment was successfully created!"
-msgstr "Consulta atualizado com sucesso"
+msgstr "Consulta marcada com sucesso"
 
 #: appointment/views.py:33 pacient/views.py:27
 msgid "Error Form"
