@@ -29,7 +29,7 @@ urlpatterns = (
         path("admin/", admin.site.urls),
         path("", views.home, name="home"),
         path("", include("collaborator.urls", namespace="collaborator")),
-        path("", include("pacient.urls", namespace="pacient")),
+        path("", include("patient.urls", namespace="patient")),
         path("", include("appointment.urls", namespace="appointments")),
     ]
     + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

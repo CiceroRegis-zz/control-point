@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 # Register your models here.
-from appointment.models import Appointment, TypeAppointment, NotificationPacient
+from appointment.models import Appointment, TypeAppointment, NotificationPatient
 
 
 @admin.register(TypeAppointment)
@@ -13,11 +13,11 @@ class TypeAppointment(admin.ModelAdmin):
 @admin.register(Appointment)
 class Appointment(admin.ModelAdmin):
     model = Appointment
-    # readonly_fields = ('pacient', 'professional','type_appointment', 'createAt')
-    list_display = ('pacient', 'professional', 'date_appointment', 'createAt')
+    # readonly_fields = ('patient', 'professional','type_appointment', 'createAt')
+    list_display = ('patient', 'professional', 'date_appointment', 'createAt')
     filter_horizontal = ['type_appointment']
 
 
-@admin.register(NotificationPacient)
+@admin.register(NotificationPatient)
 class NotificationPacientAdmin(admin.ModelAdmin):
     pass

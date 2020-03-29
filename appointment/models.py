@@ -14,12 +14,12 @@ from django.utils.timezone import localtime
 from django.utils.translation import gettext_lazy as _
 
 from collaborator.models import Profile
-from pacient.models import Pacient
+from patient.models import Patient
 
 logger = logging.getLogger('django')
 
 
-class NotificationPacient(models.Model):
+class NotificationPatient(models.Model):
     NOTIFICATION_MODEL_ACTION = (
         ('appointment-saved', _('Notify to pacientes appointments')),
     )
@@ -30,12 +30,12 @@ class NotificationPacient(models.Model):
         verbose_name_plural = _('Notification Support Team')
 
     action = models.CharField(max_length=200, choices=NOTIFICATION_MODEL_ACTION, verbose_name=_('Action'))
-    pacient = models.ForeignKey(Pacient, on_delete=models.DO_NOTHING, verbose_name=_('Pacient'))
+    patient = models.ForeignKey(Patient, on_delete=models.DO_NOTHING, verbose_name=_('Patient'))
 
     def __str__(self):
-        return self.pacient.name
+        return self.patient.name
     # def get_type_pacient(self):
-    #     return "; ".join([p.name for p in self.pacient.all()])
+    #     return "; ".join([p.name for p in self.patient.all()])
 
 
 class TypeAppointment(models.Model):
@@ -59,10 +59,11 @@ class Appointment(models.Model):
         db_table = "appointment"
         verbose_name = _("appointment")
         verbose_name_plural = _("appointment")
-    name = models.CharField(max_length=60, null=True, default=None, verbose_name=_('Appointment name'))
+
+    description = models.CharField(max_length=60, null=True, default=None, verbose_name=_('Appointment name'))
     type_appointment = models.ManyToManyField(TypeAppointment,
                                               verbose_name=_('Type appointment'))
-    pacient = models.ForeignKey(Pacient, on_delete=models.PROTECT, verbose_name=_('Pacient'))
+    patient = models.ForeignKey(Patient, on_delete=models.PROTECT, verbose_name=_('Patient'))
     professional = models.ForeignKey(Profile, on_delete=models.DO_NOTHING, verbose_name=_('Professional'))
     date_appointment = models.DateTimeField(verbose_name=_('date of appointment'))
     consulting = models.BooleanField(default=False, verbose_name=_('Consulting'))
@@ -85,32 +86,30 @@ class Appointment(models.Model):
 
     def save(self, *args, **kwargs):
         super(Appointment, self).save(*args, **kwargs)
-        if self.pacient.email:
-            self.start = threading.Thread(target=self.__send_invite_ics, args=()).start()
-
-        if self.isCanceled:
-            threading.Thread(target=self.__notify_user_action_saved, args=()).start()
+        if self.patient.email and self.createAt:
+            self.start = threading.Thread(target=self.__send_invite_ics(), args=()).start()
 
     def __send_invite_ics(self):
-        if not self.pacient.email:
+        if not self.patient.email:
             logger.warning('Patient email is empty')
             return
 
         try:
             email_message = '\n'.join([
-                'Você possui um consulta Confirmada com a Mirabolante Dente',
-                '{0}: {1}'.format('Consulta', self.name),
+                'Você possui um consulta marcada com a Mirabolante Dente',
+                '{0}: {1}'.format('Consulta', self.description),
                 '{0}: {1}'.format('Endereço',
                                   '<Mirabolante Dente>, CNA 01 Lote 09/10 Ed. Santos Dumond Salas 501 e 502, '
                                   'Taguatinga Norte, Brasília - DF, 72110-015'),
                 '{0}: {1}'.format('Responsável pela Consulta', self.professional),
                 '{0}: {1}'.format('Email do responsavel', 'www.mirabolantedente.net.com.br'),
-                '{0}: {1}'.format('Seu Atendimento será dia', localtime(self.date_appointment).strftime('%d/%m/%Y %H:%M')),
+                '{0}: {1}'.format('Seu Atendimento será dia',
+                                  localtime(self.date_appointment).strftime('%d/%m/%Y %H:%M')),
             ])
             email = EmailMultiAlternatives(
-                '{0} - {1}'.format(self.name, 'cancelado' if not self.date_now else 'marcado'),
+                '{0} - {1}'.format(self.description, 'cancelado' if not self.date_now else 'marcado'),
                 email_message, 'Mirabolante Dente <www.mirabolantedente.net.com.br>',
-                to=[self.pacient.email],
+                to=[self.patient.email],
             )
 
             # Form more information read https://tools.ietf.org/html/rfc5545
@@ -127,11 +126,11 @@ class Appointment(models.Model):
                 'ORGANIZER;CN={0}:MAILTO:{1}'.format('Mirabolante Dente', 'cicerooliveira091@gmail.com'),
                 'UID:{0}@control-point.app'.format(self.calendarUUID.hex.lower()),
                 *['ATTENDEE;CUTYPE=INDIVIDUAL;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION;RSVP='
-                  'TRUE;CN={0};X-NUM-GUESTS=0:mailto:{0}'.format(g) for g in self.pacient.email],
+                  'TRUE;CN={0};X-NUM-GUESTS=0:mailto:{0}'.format(g) for g in self.patient.email],
                 'X-MICROSOFT-CDO-OWNERAPPTID:{0}'.format(self.calendarOwnerTID),
                 'SEQUENCE:{0}'.format('1' if self.isCanceled else '0'),
                 'STATUS:{0}'.format('CANCELLED' if self.isCanceled else 'CONFIRMED'),
-                'SUMMARY:{0}'.format(self.name),
+                'SUMMARY:{0}'.format(self.description),
                 'TRANSP:OPAQUE',
                 'END:VEVENT',
                 'END:VCALENDAR',
@@ -157,15 +156,15 @@ class Appointment(models.Model):
 
     def __notify_patient_action_saved(self):
         query_set_patient = Appointment.objects.values(
-            'pacient__email').filter(action='appointment-saved')
-        pacients = [e.get('pacient__email')
-                    for e in query_set_patient if e.get('pacient__email', False)]
-        if len(pacients) < 1:
+            'patient__email')
+        patients = [e.get('patient__email')
+                    for e in query_set_patient if e.get('patient__email', False)]
+        if len(patients) < 1:
             return
 
         email_message = '\n'.join([
-            'Você possui um consulta Confirmada com a Mirabolante Dente',
-            '{0}: {1}'.format('Consulta', self.name),
+            'Você possui um consulta marcada com a Mirabolante Dente',
+            '{0}: {1}'.format('Consulta', self.description),
             '{0}: {1}'.format('Endereço',
                               '<Mirabolante Dente>, CNA 01 Lote 09/10 Ed. Santos Dumond Salas 501 e 502, '
                               'Taguatinga Norte, Brasília - DF, 72110-015'),
@@ -174,14 +173,14 @@ class Appointment(models.Model):
             '{0}: {1}'.format('Seu Atendimento será dia', localtime(self.date_appointment).strftime('%d/%m/%Y %H:%M')),
         ])
 
-        if not self.isCanceled:
+        if self.createAt:
             try:
                 send_mail(
-                    '{0}'.format(self.pacient.name),
+                    '{0}'.format(self.patient.name),
                     email_message,
                     'Mirabolante Dente <www.mirabolantedente.net.com.br>',
-                    pacients
+                    patients
                 )
-                logger.info('Notify pacients success')
+                logger.info('Notify patients success')
             except Exception as e:
-                logger.error('Notify pacients error', exc_info=e)
+                logger.error('Notify patients error', exc_info=e)

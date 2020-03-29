@@ -1,10 +1,13 @@
 from django import forms
-from django.contrib.auth.models import User
 from django.utils.translation import gettext_lazy as _
 
 from appointment.models import Appointment, TypeAppointment
 from collaborator.models import Profile
-from pacient.models import Pacient
+from patient.models import Patient
+
+
+class FilterForm(forms.Form):
+    date_appointment = forms.DateTimeField(required=True)
 
 
 class AppointmentForm(forms.ModelForm):
@@ -15,10 +18,10 @@ class AppointmentForm(forms.ModelForm):
             "createAt",
         )
 
-        nome = forms.CharField(
+    description = forms.CharField(
             error_messages={"required": _("Name appointment is required")},
             widget=forms.TextInput(
-                attrs={"class": "form-control", "placeholder": "Descrição do Atendimento"}
+                attrs={"class": "form-control", "placeholder": "Informe a descrição do Atendimento"}
             ),
         )
 
@@ -35,15 +38,15 @@ class AppointmentForm(forms.ModelForm):
         queryset=TypeAppointment.objects.all(),
     )
 
-    pacient = forms.ModelChoiceField(
+    patient = forms.ModelChoiceField(
         widget=forms.Select(
-            attrs={"class": "form-control", "placeholder": "Paciente"}
+            attrs={"class": "form-control js-example-placeholder-single"}
         ),
-        queryset=Pacient.objects.all()
+        queryset=Patient.objects.all()
     )
 
     professional = forms.ModelChoiceField(
-        widget=forms.Select(attrs={"class": "form-control", "placeholder": "Profissional"}),
+        widget=forms.Select(attrs={"class": "form-control js-example-placeholder-single2"}),
         queryset=Profile.objects.all()
     )
 

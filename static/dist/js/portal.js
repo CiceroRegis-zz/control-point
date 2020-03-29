@@ -13,10 +13,22 @@ $(document).ready(function() {
         format: 'd/m/Y H:i'
     });
 
-    // In your Javascript (external .js resource or <script> tag)
+       // In your Javascript (external .js resource or <script> tag)
     $('.js-example-basic-multiple').select2({
-    placeholder: 'Selecione o consultas para o paciente'
+    placeholder: 'Selecione a consultas para o paciente'
     });
+
+     $(".js-example-placeholder-single").select2({
+      placeholder: "Selecione o paciente",
+    });
+
+    $(".js-example-placeholder-single2").select2({
+      placeholder: "Selecione o Medico",
+    });
+
+
+
+
 
     // var email_re = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
     // var $guest_input = $('textarea[name="guests"]');

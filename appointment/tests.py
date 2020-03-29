@@ -24,7 +24,7 @@ class ShowtotalPrice(unittest.TestCase):
     #         total=Sum('type_appointment__price')).order_by(
     #         '-date_appointment')
     #     for app in appointments:
-    #         print('agendamentos do dia:', app.pacient, "no dia:", app.date_appointment)
+    #         print('agendamentos do dia:', app.patient, "no dia:", app.date_appointment)
 
     # def test_mostrar_total_de_consultas_agendadas(self):
     #     appointments = Appointment.objects.all().count()
