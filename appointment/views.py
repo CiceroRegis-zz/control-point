@@ -81,7 +81,7 @@ def update_appointment(request, pk):
         if form.is_valid():
             form.save()
             messages.success(
-                request, _("Consulta de {0} foi atualizada com sucesso!".format(appointment.patient)
+                request, _("Dados da consulta de {0} foi atualizada com sucesso!".format(appointment.patient)
                            ),
             )
             return redirect("appointments:list-appointments")

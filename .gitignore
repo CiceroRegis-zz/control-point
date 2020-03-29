@@ -2,7 +2,7 @@
 
 ### Code ###
 # Visual Studio Code - https://code.visualstudio.com/
-.settings/
+.project_config/
 .vscode/
 tsconfig.json
 jsconfig.json
